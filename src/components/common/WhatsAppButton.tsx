@@ -5,13 +5,14 @@ import { Box, Fab, Tooltip, Typography, Paper, IconButton } from "@mui/material"
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import CloseIcon from "@mui/icons-material/Close";
 import { motion, AnimatePresence } from "framer-motion";
+import { company, whatsappUrl as getWhatsAppUrl } from "@/data/company";
 
 export default function WhatsAppButton() {
   const [open, setOpen] = useState(false);
 
-  const whatsappNumber = "919876543210";
-  const message = "Hello! I'm interested in your portable cabin/modular office solutions. Please provide more details.";
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  const message =
+    "Hello! I'm interested in MA INFRA portable cabin / modular office solutions. Please share details.";
+  const chatUrl = getWhatsAppUrl(message);
 
   return (
     <Box
@@ -124,7 +125,7 @@ export default function WhatsAppButton() {
               >
                 <Box
                   component="a"
-                  href={whatsappUrl}
+                  href={chatUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   sx={{

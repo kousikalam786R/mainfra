@@ -23,6 +23,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SendIcon from "@mui/icons-material/Send";
+import { company } from "@/data/company";
 
 const footerLinks = {
   Products: [
@@ -51,6 +52,51 @@ const footerLinks = {
   ],
 };
 
+const sectionTitleSx = {
+  color: "#64748B",
+  display: "block",
+  mb: 2,
+  fontWeight: 700,
+  letterSpacing: "0.12em",
+  fontSize: "0.7rem",
+  lineHeight: 1.2,
+};
+
+function ContactRow({
+  icon,
+  children,
+  alignTop = false,
+}: {
+  icon: React.ReactNode;
+  children: React.ReactNode;
+  alignTop?: boolean;
+}) {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        gap: 1.25,
+        alignItems: alignTop ? "flex-start" : "center",
+      }}
+    >
+      <Box
+        sx={{
+          width: 22,
+          flexShrink: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#F57C00",
+          pt: alignTop ? 0.15 : 0,
+        }}
+      >
+        {icon}
+      </Box>
+      <Box sx={{ minWidth: 0, flex: 1 }}>{children}</Box>
+    </Box>
+  );
+}
+
 export default function Footer() {
   return (
     <Box
@@ -58,15 +104,26 @@ export default function Footer() {
       sx={{
         bgcolor: "#0A1628",
         color: "white",
-        pt: { xs: 8, md: 10 },
-        pb: 4,
+        pt: { xs: 6, md: 8 },
+        pb: 3,
       }}
     >
       <Container maxWidth="xl">
-        <Grid container spacing={5} mb={6}>
+        <Grid
+          container
+          spacing={{ xs: 4, md: 5 }}
+          sx={{ mb: { xs: 4, md: 6 }, alignItems: "flex-start" }}
+        >
           {/* Brand column */}
-          <Grid size={{ xs: 12, md: 4, lg: 3.5 }}>
-            <Box display="flex" alignItems="center" gap={1.5} mb={2.5}>
+          <Grid size={{ xs: 12, lg: 4 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5,
+                mb: 2,
+              }}
+            >
               <Box
                 sx={{
                   width: 44,
@@ -79,15 +136,23 @@ export default function Footer() {
                   fontWeight: 900,
                   fontSize: "1.2rem",
                   flexShrink: 0,
+                  color: "#fff",
                 }}
               >
                 M
               </Box>
               <Box>
-                <Typography fontWeight={800} fontSize="1.2rem" lineHeight={1}>
+                <Typography
+                  sx={{
+                    fontWeight: 800,
+                    fontSize: "1.15rem",
+                    lineHeight: 1.2,
+                    color: "#fff",
+                  }}
+                >
                   MA INFRA
                 </Typography>
-                <Typography variant="caption" sx={{ color: "#94A3B8" }}>
+                <Typography variant="caption" sx={{ color: "#94A3B8", display: "block" }}>
                   Portable Cabin
                 </Typography>
               </Box>
@@ -95,37 +160,51 @@ export default function Footer() {
 
             <Typography
               variant="body2"
-              sx={{ color: "#94A3B8", mb: 3, lineHeight: 1.8, maxWidth: 320 }}
+              sx={{ color: "#94A3B8", mb: 2.5, lineHeight: 1.7, maxWidth: 320 }}
             >
-              India's leading manufacturer of portable cabins, modular offices,
-              and container-based infrastructure. Building tomorrow's workspace
-              today.
+              India&apos;s leading manufacturer of portable cabins, modular offices,
+              and container-based infrastructure. {company.tagline}
             </Typography>
 
-            <Box display="flex" flexDirection="column" gap={1.5} mb={3}>
-              <Box display="flex" gap={1.5} alignItems="flex-start">
-                <LocationOnIcon sx={{ color: "#F57C00", fontSize: 18, mt: 0.2 }} />
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.25, mb: 2.5 }}>
+              <ContactRow
+                alignTop
+                icon={<LocationOnIcon sx={{ fontSize: 18 }} />}
+              >
                 <Typography variant="body2" sx={{ color: "#94A3B8", lineHeight: 1.6 }}>
-                  Plot No. 42, Industrial Area Phase-II,
+                  {company.address.line1}
                   <br />
-                  Noida, Uttar Pradesh – 201301
+                  {company.address.line2}
+                  <br />
+                  {company.address.city}, {company.address.pincode}
+                  <br />
+                  {company.address.state}, {company.address.country}
                 </Typography>
-              </Box>
-              <Box display="flex" gap={1.5} alignItems="center">
-                <PhoneIcon sx={{ color: "#F57C00", fontSize: 18 }} />
-                <Typography variant="body2" sx={{ color: "#94A3B8" }}>
-                  +91 98765 43210
+              </ContactRow>
+              <ContactRow icon={<PhoneIcon sx={{ fontSize: 18 }} />}>
+                <Typography variant="body2" sx={{ color: "#94A3B8", lineHeight: 1.5 }}>
+                  {company.phone}
+                  <Box component="span" sx={{ color: "#64748B" }}>
+                    {" "}
+                    · {company.salesManager}
+                  </Box>
                 </Typography>
-              </Box>
-              <Box display="flex" gap={1.5} alignItems="center">
-                <EmailIcon sx={{ color: "#F57C00", fontSize: 18 }} />
-                <Typography variant="body2" sx={{ color: "#94A3B8" }}>
-                  info@mainfraportablecabin.com
+              </ContactRow>
+              <ContactRow icon={<EmailIcon sx={{ fontSize: 18 }} />}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#94A3B8",
+                    lineHeight: 1.5,
+                    wordBreak: "break-word",
+                  }}
+                >
+                  {company.email}
                 </Typography>
-              </Box>
+              </ContactRow>
             </Box>
 
-            <Box display="flex" gap={1}>
+            <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
               {[
                 { icon: <FacebookIcon fontSize="small" />, href: "#" },
                 { icon: <InstagramIcon fontSize="small" />, href: "#" },
@@ -153,117 +232,144 @@ export default function Footer() {
             </Box>
           </Grid>
 
-          {/* Links columns */}
-          {Object.entries(footerLinks).map(([title, links]) => (
-            <Grid size={{ xs: 6, sm: 4, md: 2, lg: 2 }} key={title}>
-              <Typography
-                variant="overline"
-                fontWeight={700}
-                letterSpacing={1.5}
-                sx={{ color: "#64748B", display: "block", mb: 2 }}
-              >
-                {title}
-              </Typography>
-              <Box display="flex" flexDirection="column" gap={1.25}>
-                {links.map((link) => (
-                  <Typography
-                    key={link.label}
-                    component={Link}
-                    href={link.href}
-                    variant="body2"
+          {/* Products, Company, Support & Newsletter — one row beside brand */}
+          <Grid size={{ xs: 12, lg: 8 }}>
+            <Grid
+              container
+              spacing={{ xs: 4, md: 5 }}
+              sx={{ alignItems: "flex-start" }}
+            >
+              {Object.entries(footerLinks).map(([title, links]) => (
+                <Grid size={{ xs: 6, sm: 4, md: 2, lg: 2 }} key={title}>
+                  <Typography variant="overline" sx={sectionTitleSx}>
+                    {title}
+                  </Typography>
+                  <Box
+                    component="nav"
                     sx={{
-                      color: "#94A3B8",
-                      textDecoration: "none",
-                      transition: "color 0.2s",
-                      "&:hover": { color: "#F57C00" },
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 1,
                     }}
                   >
-                    {link.label}
-                  </Typography>
-                ))}
-              </Box>
-            </Grid>
-          ))}
+                    {links.map((link) => (
+                      <Typography
+                        key={link.label}
+                        component={Link}
+                        href={link.href}
+                        variant="body2"
+                        sx={{
+                          color: "#94A3B8",
+                          textDecoration: "none",
+                          lineHeight: 1.5,
+                          transition: "color 0.2s",
+                          "&:hover": { color: "#F57C00" },
+                        }}
+                      >
+                        {link.label}
+                      </Typography>
+                    ))}
+                  </Box>
+                </Grid>
+              ))}
 
-          {/* Newsletter */}
-          <Grid size={{ xs: 12, sm: 8, md: 4, lg: 2.5 }}>
-            <Typography
-              variant="overline"
-              fontWeight={700}
-              letterSpacing={1.5}
-              sx={{ color: "#64748B", display: "block", mb: 2 }}
-            >
-              Newsletter
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: "#94A3B8", mb: 2, lineHeight: 1.7 }}
-            >
-              Get the latest product updates, industry news, and exclusive
-              offers.
-            </Typography>
-            <Box display="flex" gap={1} flexDirection={{ xs: "row", md: "row" }}>
-              <TextField
-                placeholder="Your email"
-                size="small"
-                fullWidth
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    bgcolor: "#1E293B",
-                    color: "white",
+              <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6 }}>
+                <Typography variant="overline" sx={sectionTitleSx}>
+                  Newsletter
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: "#94A3B8", mb: 2, lineHeight: 1.65 }}
+                >
+                  Get the latest product updates, industry news, and exclusive offers.
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 1,
+                    alignItems: "stretch",
+                  }}
+                >
+                  <TextField
+                    placeholder="Your email"
+                    size="small"
+                    fullWidth
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        bgcolor: "#1E293B",
+                        color: "white",
+                        borderRadius: 2,
+                        height: "100%",
+                        "& fieldset": { borderColor: "#334155" },
+                        "&:hover fieldset": { borderColor: "#475569" },
+                        "&.Mui-focused fieldset": { borderColor: "#1565C0" },
+                        "& input::placeholder": { color: "#64748B", opacity: 1 },
+                      },
+                    }}
+                  />
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    aria-label="Subscribe"
+                    sx={{
+                      minWidth: 48,
+                      px: 1.5,
+                      borderRadius: 2,
+                      flexShrink: 0,
+                    }}
+                  >
+                    <SendIcon fontSize="small" />
+                  </Button>
+                </Box>
+
+                <Box
+                  sx={{
+                    mt: 2.5,
+                    p: 2,
+                    bgcolor: "#0F172A",
                     borderRadius: 2,
-                    "& fieldset": { borderColor: "#334155" },
-                    "&:hover fieldset": { borderColor: "#475569" },
-                    "&.Mui-focused fieldset": { borderColor: "#1565C0" },
-                    "& input::placeholder": { color: "#64748B" },
-                  },
-                }}
-              />
-              <Button
-                variant="contained"
-                color="secondary"
-                sx={{ minWidth: "auto", px: 2, borderRadius: 2 }}
-              >
-                <SendIcon fontSize="small" />
-              </Button>
-            </Box>
-
-            <Box mt={3} p={2} bgcolor="#0F172A" borderRadius={2}>
-              <Chip
-                label="ISO 9001:2015"
-                size="small"
-                sx={{ bgcolor: "#1E293B", color: "#94A3B8", mb: 1, mr: 1 }}
-              />
-              <Chip
-                label="CE Certified"
-                size="small"
-                sx={{ bgcolor: "#1E293B", color: "#94A3B8", mb: 1, mr: 1 }}
-              />
-              <Chip
-                label="MSME Registered"
-                size="small"
-                sx={{ bgcolor: "#1E293B", color: "#94A3B8" }}
-              />
-            </Box>
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 1,
+                  }}
+                >
+                  {["ISO 9001:2015", "CE Certified", "MSME Registered"].map((label) => (
+                    <Chip
+                      key={label}
+                      label={label}
+                      size="small"
+                      sx={{
+                        bgcolor: "#1E293B",
+                        color: "#94A3B8",
+                        fontSize: "0.7rem",
+                        height: 26,
+                      }}
+                    />
+                  ))}
+                </Box>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
 
         <Divider sx={{ borderColor: "#1E293B" }} />
 
         <Box
-          pt={3}
-          display="flex"
-          flexDirection={{ xs: "column", sm: "row" }}
-          justifyContent="space-between"
-          alignItems={{ xs: "center", sm: "center" }}
-          gap={2}
-          textAlign={{ xs: "center", sm: "left" }}
+          sx={{
+            pt: 2.5,
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "space-between",
+            alignItems: { xs: "center", sm: "center" },
+            gap: 1.5,
+            textAlign: { xs: "center", sm: "left" },
+          }}
         >
-          <Typography variant="caption" sx={{ color: "#475569" }}>
+          <Typography variant="caption" sx={{ color: "#475569", lineHeight: 1.5 }}>
             © {new Date().getFullYear()} MA INFRA Portable Cabin. All rights reserved.
           </Typography>
-          <Typography variant="caption" sx={{ color: "#475569" }}>
-            Made with ♥ in India &nbsp;·&nbsp; GST: 09ABCDE1234F1Z5
+          <Typography variant="caption" sx={{ color: "#475569", lineHeight: 1.5 }}>
+            Made with ♥ in India · GST: 09ABCDE1234F1Z5
           </Typography>
         </Box>
       </Container>

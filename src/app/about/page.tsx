@@ -157,7 +157,7 @@ export default function AboutPage() {
                 </Typography>
                 <Typography variant="body1" sx={{ color: "rgba(255,255,255,0.75)", lineHeight: 1.8, maxWidth: 560 }}>
                   Since 2009, MA INFRA Portable Cabin has been at the forefront of India's portable structure industry.
-                  From a small workshop in Noida to a 120,000 sq ft manufacturing facility, our story is
+                  From a small workshop in Ranchi to a growing manufacturing facility in Jharkhand, our story is
                   one of relentless quality and customer commitment.
                 </Typography>
               </motion.div>
@@ -261,7 +261,7 @@ export default function AboutPage() {
                           120,000 sq ft Factory
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
-                          Noida, Uttar Pradesh · ISO 9001:2015 Certified
+                          Ranchi, Jharkhand · ISO 9001:2015 Certified
                         </Typography>
                       </Box>
                     </Paper>

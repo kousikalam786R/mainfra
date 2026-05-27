@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { useParams, notFound } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Box,
   Container,
@@ -22,24 +23,30 @@ import {
   Tabs,
   Tab,
   IconButton,
+  Grid,
 } from "@mui/material";
-import { Grid } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import PhoneIcon from "@mui/icons-material/Phone";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { products } from "@/data/products";
 import ProductCard from "@/components/cards/ProductCard";
-import SectionHeader from "@/components/common/SectionHeader";
+import { company, whatsappUrl } from "@/data/company";
+
+const trustItems = [
+  { icon: VerifiedIcon, label: "ISO Certified" },
+  { icon: LocalShippingIcon, label: "Pan-India Delivery" },
+  { icon: CheckCircleIcon, label: "2-Year Warranty" },
+];
 
 export default function ProductDetailPage() {
-  const { slug } = useParams();
+  const params = useParams();
+  const slug = typeof params.slug === "string" ? params.slug : params.slug?.[0];
   const product = products.find((p) => p.slug === slug);
 
   const [activeImage, setActiveImage] = useState(0);
@@ -47,10 +54,25 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <Box sx={{ textAlign: "center", py: 10 }}>
-        <Typography variant="h4">Product not found</Typography>
-        <Button component={Link} href="/products" sx={{ mt: 2 }}>
-          Browse Products
+      <Box
+        sx={{
+          minHeight: "60vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          bgcolor: "#F8FAFC",
+          px: 2,
+        }}
+      >
+        <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
+          Product not found
+        </Typography>
+        <Typography variant="body2" sx={{ color: "text.secondary", mb: 3 }}>
+          This product may have been removed or the link is incorrect.
+        </Typography>
+        <Button component={Link} href="/products" variant="contained">
+          Browse all products
         </Button>
       </Box>
     );
@@ -60,48 +82,105 @@ export default function ProductDetailPage() {
     .filter((p) => p.categorySlug === product.categorySlug && p.id !== product.id)
     .slice(0, 4);
 
+  const imageCount = product.images.length;
+  const prevImage = () =>
+    setActiveImage((i) => (i - 1 + imageCount) % imageCount);
+  const nextImage = () => setActiveImage((i) => (i + 1) % imageCount);
+
+  const contactHref = `/contact?product=${encodeURIComponent(product.name)}`;
+
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: "#F8FAFC" }}>
-      {/* Breadcrumb bar */}
-      <Box sx={{ bgcolor: "white", borderBottom: "1px solid rgba(0,0,0,0.06)", py: 2 }}>
+      {/* Header — matches Gallery / Products */}
+      <Box
+        sx={{
+          background: "linear-gradient(135deg, #0A1628, #1565C0)",
+          py: { xs: 1.5, md: 2 },
+          color: "#FFFFFF",
+        }}
+      >
         <Container maxWidth="xl">
-          <Breadcrumbs>
+          <Breadcrumbs
+            aria-label="breadcrumb"
+            sx={{
+              mb: 0.5,
+              "& .MuiBreadcrumbs-separator": { mx: 0.5, color: "rgba(255,255,255,0.4)" },
+              "& .MuiBreadcrumbs-li": { maxWidth: { xs: 120, sm: "none" } },
+            }}
+          >
             <MuiLink
               component={Link}
               href="/"
-              sx={{ display: "flex", alignItems: "center", gap: 0.5, color: "text.secondary" }}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.35,
+                color: "rgba(255,255,255,0.65)",
+                fontSize: "0.75rem",
+                textDecoration: "none",
+                "&:hover": { color: "rgba(255,255,255,0.9)" },
+              }}
             >
-              <HomeIcon fontSize="small" /> Home
+              <HomeIcon sx={{ fontSize: 14 }} /> Home
             </MuiLink>
             <MuiLink
               component={Link}
               href="/products"
-              sx={{ color: "text.secondary" }}
+              sx={{
+                color: "rgba(255,255,255,0.65)",
+                fontSize: "0.75rem",
+                textDecoration: "none",
+                "&:hover": { color: "rgba(255,255,255,0.9)" },
+              }}
             >
               Products
             </MuiLink>
             <MuiLink
               component={Link}
               href={`/products?category=${product.categorySlug}`}
-              sx={{ color: "text.secondary" }}
+              sx={{
+                color: "rgba(255,255,255,0.65)",
+                fontSize: "0.75rem",
+                textDecoration: "none",
+                "&:hover": { color: "rgba(255,255,255,0.9)" },
+              }}
             >
               {product.category}
             </MuiLink>
-            <Typography color="text.primary" fontSize="0.875rem" sx={{
-              display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical", overflow: "hidden", maxWidth: 200
-            }}>
+            <Typography
+              sx={{
+                color: "rgba(255,255,255,0.9)",
+                fontSize: "0.75rem",
+                display: "-webkit-box",
+                WebkitLineClamp: 1,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+            >
               {product.name}
             </Typography>
           </Breadcrumbs>
+          <Typography
+            variant="h5"
+            component="h1"
+            sx={{
+              color: "#FFFFFF",
+              fontWeight: 700,
+              fontSize: { xs: "1.25rem", md: "1.5rem" },
+              lineHeight: 1.2,
+              m: 0,
+            }}
+          >
+            {product.name}
+          </Typography>
         </Container>
       </Box>
 
-      <Container maxWidth="xl" sx={{ py: 5 }}>
-        <Grid container spacing={5}>
-          {/* Image Gallery */}
+      <Container maxWidth="xl" sx={{ py: { xs: 3, md: 4 } }}>
+        <Grid container spacing={{ xs: 3, md: 5 }}>
+          {/* Image gallery */}
           <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ position: "sticky", top: 90 }}>
-              {/* Main image */}
+            <Box sx={{ position: { md: "sticky" }, top: { md: 90 } }}>
               <Paper
                 elevation={0}
                 sx={{
@@ -110,85 +189,164 @@ export default function ProductDetailPage() {
                   border: "1px solid rgba(0,0,0,0.06)",
                   position: "relative",
                   bgcolor: "#F1F5F9",
-                  aspectRatio: "4/3",
+                  aspectRatio: "4 / 3",
                   mb: 2,
                 }}
               >
-                <motion.div
-                  key={activeImage}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    backgroundImage: `url(${product.images[activeImage]})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                />
-                <Box display="flex" gap={0.5} sx={{ position: "absolute", top: 12, left: 12 }}>
-                  {product.isBestseller && (
-                    <Chip label="Bestseller" size="small" sx={{ bgcolor: "#F57C00", color: "white", fontWeight: 700 }} />
-                  )}
-                  {product.isNew && (
-                    <Chip label="New" size="small" sx={{ bgcolor: "#16A34A", color: "white", fontWeight: 700 }} />
-                  )}
-                </Box>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeImage}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    style={{ position: "absolute", inset: 0 }}
+                  >
+                    <Image
+                      src={product.images[activeImage]}
+                      alt={`${product.name} — image ${activeImage + 1}`}
+                      fill
+                      sizes="(max-width: 900px) 100vw, 50vw"
+                      style={{ objectFit: "cover" }}
+                      priority={activeImage === 0}
+                    />
+                  </motion.div>
+                </AnimatePresence>
 
-                {/* Nav arrows */}
-                <IconButton
-                  onClick={() => setActiveImage((i) => (i - 1 + product.images.length) % product.images.length)}
-                  sx={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)", bgcolor: "rgba(255,255,255,0.9)", "&:hover": { bgcolor: "white" } }}
-                  size="small"
-                >
-                  <ArrowBackIosNewIcon fontSize="small" />
-                </IconButton>
-                <IconButton
-                  onClick={() => setActiveImage((i) => (i + 1) % product.images.length)}
-                  sx={{ position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)", bgcolor: "rgba(255,255,255,0.9)", "&:hover": { bgcolor: "white" } }}
-                  size="small"
-                >
-                  <ArrowForwardIosIcon fontSize="small" />
-                </IconButton>
+                {(product.isBestseller || product.isNew) && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 12,
+                      left: 12,
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: 0.75,
+                      zIndex: 2,
+                    }}
+                  >
+                    {product.isBestseller && (
+                      <Chip
+                        label="Bestseller"
+                        size="small"
+                        sx={{
+                          bgcolor: "#F57C00",
+                          color: "white",
+                          fontWeight: 700,
+                          height: 24,
+                        }}
+                      />
+                    )}
+                    {product.isNew && (
+                      <Chip
+                        label="New"
+                        size="small"
+                        sx={{
+                          bgcolor: "#16A34A",
+                          color: "white",
+                          fontWeight: 700,
+                          height: 24,
+                        }}
+                      />
+                    )}
+                  </Box>
+                )}
+
+                {imageCount > 1 && (
+                  <>
+                    <IconButton
+                      onClick={prevImage}
+                      aria-label="Previous image"
+                      size="small"
+                      sx={{
+                        position: "absolute",
+                        left: 8,
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        bgcolor: "rgba(255,255,255,0.95)",
+                        zIndex: 2,
+                        "&:hover": { bgcolor: "white" },
+                      }}
+                    >
+                      <ArrowBackIosNewIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      onClick={nextImage}
+                      aria-label="Next image"
+                      size="small"
+                      sx={{
+                        position: "absolute",
+                        right: 8,
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        bgcolor: "rgba(255,255,255,0.95)",
+                        zIndex: 2,
+                        "&:hover": { bgcolor: "white" },
+                      }}
+                    >
+                      <ArrowForwardIosIcon fontSize="small" />
+                    </IconButton>
+                  </>
+                )}
               </Paper>
 
-              {/* Thumbnails */}
-              <Box display="flex" gap={1.5} flexWrap="wrap">
-                {product.images.map((img, i) => (
-                  <Box
-                    key={i}
-                    onClick={() => setActiveImage(i)}
-                    sx={{
-                      width: 72,
-                      height: 60,
-                      borderRadius: 2,
-                      overflow: "hidden",
-                      cursor: "pointer",
-                      border: "2px solid",
-                      borderColor: i === activeImage ? "primary.main" : "transparent",
-                      opacity: i === activeImage ? 1 : 0.65,
-                      transition: "all 0.2s ease",
-                      backgroundImage: `url(${img})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      bgcolor: "#F1F5F9",
-                      "&:hover": { opacity: 1 },
-                    }}
-                  />
-                ))}
-              </Box>
+              {imageCount > 1 && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 1.25,
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {product.images.map((img, i) => (
+                    <Box
+                      key={i}
+                      onClick={() => setActiveImage(i)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setActiveImage(i);
+                        }
+                      }}
+                      sx={{
+                        position: "relative",
+                        width: 72,
+                        height: 56,
+                        borderRadius: 2,
+                        overflow: "hidden",
+                        cursor: "pointer",
+                        border: "2px solid",
+                        borderColor:
+                          i === activeImage ? "primary.main" : "transparent",
+                        opacity: i === activeImage ? 1 : 0.7,
+                        transition: "all 0.2s ease",
+                        flexShrink: 0,
+                        "&:hover": { opacity: 1 },
+                      }}
+                    >
+                      <Image
+                        src={img}
+                        alt=""
+                        fill
+                        sizes="72px"
+                        style={{ objectFit: "cover" }}
+                      />
+                    </Box>
+                  ))}
+                </Box>
+              )}
             </Box>
           </Grid>
 
-          {/* Product Info */}
+          {/* Product info */}
           <Grid size={{ xs: 12, md: 6 }}>
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: 16 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.4 }}
             >
-              {/* Category */}
               <Chip
                 label={product.category}
                 size="small"
@@ -197,60 +355,122 @@ export default function ProductDetailPage() {
                 sx={{ mb: 2, fontWeight: 600, borderRadius: 1.5 }}
               />
 
-              {/* Title */}
-              <Typography variant="h3" fontWeight={800} color="text.primary" mb={1.5} lineHeight={1.2}>
+              <Typography
+                variant="h4"
+                component="h2"
+                sx={{
+                  fontWeight: 800,
+                  color: "text.primary",
+                  mb: 1.5,
+                  lineHeight: 1.25,
+                  fontSize: { xs: "1.35rem", md: "1.75rem" },
+                }}
+              >
                 {product.name}
               </Typography>
 
-              {/* Rating */}
-              <Box display="flex" alignItems="center" gap={1.5} mb={2}>
-                <Rating value={product.rating} precision={0.1} size="small" readOnly />
-                <Typography variant="body2" fontWeight={600} color="primary">
-                  {product.rating}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                  gap: 1.25,
+                  mb: 2.5,
+                }}
+              >
+                <Rating
+                  value={product.rating}
+                  precision={0.1}
+                  size="small"
+                  readOnly
+                  sx={{ "& .MuiRating-icon": { fontSize: 18 } }}
+                />
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: 700, color: "primary.main" }}
+                >
+                  {product.rating.toFixed(1)}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
                   ({product.reviews} reviews)
                 </Typography>
               </Box>
 
-              {/* Price */}
-              <Box mb={2.5}>
-                <Typography variant="caption" color="text.secondary">
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 2.5,
+                  mb: 2.5,
+                  borderRadius: 2,
+                  bgcolor: "white",
+                  border: "1px solid rgba(0,0,0,0.06)",
+                }}
+              >
+                <Typography
+                  variant="caption"
+                  sx={{ color: "text.secondary", display: "block", mb: 0.5 }}
+                >
                   Starting from
                 </Typography>
-                <Typography variant="h3" fontWeight={800} color="primary.main" lineHeight={1.1}>
+                <Typography
+                  sx={{
+                    fontWeight: 800,
+                    color: "primary.main",
+                    fontSize: { xs: "1.75rem", md: "2rem" },
+                    lineHeight: 1.1,
+                    mb: 0.75,
+                  }}
+                >
                   {product.price}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" mt={0.25}>
-                  Price range: {product.priceRange} · Customization available
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  Range: {product.priceRange} · Custom sizes available
                 </Typography>
-              </Box>
+              </Paper>
 
-              <Divider sx={{ my: 2.5 }} />
-
-              {/* Description */}
-              <Typography variant="body1" color="text.secondary" lineHeight={1.8} mb={3}>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "text.secondary",
+                  lineHeight: 1.75,
+                  mb: 3,
+                  fontSize: "0.9375rem",
+                }}
+              >
                 {product.description}
               </Typography>
 
-              {/* Key highlights */}
-              <Box mb={3}>
-                <Typography variant="subtitle2" fontWeight={700} mb={1.5}>
-                  Key Features
-                </Typography>
-                <Grid container spacing={1}>
-                  {product.features.slice(0, 6).map((feat, i) => (
-                    <Grid size={{ xs: 12, sm: 6 }} key={i}>
-                      <Box display="flex" gap={1} alignItems="flex-start">
-                        <CheckCircleIcon color="primary" sx={{ fontSize: 16, mt: 0.25, flexShrink: 0 }} />
-                        <Typography variant="body2" color="text.secondary">{feat}</Typography>
-                      </Box>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Box>
+              <Typography
+                variant="subtitle2"
+                sx={{ fontWeight: 700, mb: 1.5 }}
+              >
+                Key features
+              </Typography>
+              <Grid container spacing={1.25} sx={{ mb: 3 }}>
+                {product.features.slice(0, 6).map((feat, i) => (
+                  <Grid size={{ xs: 12, sm: 6 }} key={i}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: 1,
+                      }}
+                    >
+                      <CheckCircleIcon
+                        color="primary"
+                        sx={{ fontSize: 18, mt: 0.15, flexShrink: 0 }}
+                      />
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "text.secondary", lineHeight: 1.5 }}
+                      >
+                        {feat}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
 
-              {/* Delivery info */}
               <Paper
                 elevation={0}
                 sx={{
@@ -259,45 +479,62 @@ export default function ProductDetailPage() {
                   border: "1px solid #BBF7D0",
                   borderRadius: 2,
                   display: "flex",
+                  alignItems: "flex-start",
                   gap: 1.5,
-                  alignItems: "center",
                   mb: 3,
                 }}
               >
-                <LocalShippingIcon sx={{ color: "#16A34A" }} />
+                <LocalShippingIcon
+                  sx={{ color: "#16A34A", fontSize: 22, flexShrink: 0, mt: 0.25 }}
+                />
                 <Box>
-                  <Typography variant="body2" fontWeight={700} color="#16A34A">
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 700, color: "#16A34A", mb: 0.25 }}
+                  >
                     Delivery in {product.deliveryTime}
                   </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    Free delivery across India on orders above ₹1,00,000
+                  <Typography variant="caption" sx={{ color: "text.secondary" }}>
+                    Pan-India delivery from Ranchi · Installation support available
                   </Typography>
                 </Box>
               </Paper>
 
-              {/* CTA Buttons */}
-              <Box display="flex" gap={2} mb={2} flexWrap="wrap">
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", sm: "row" },
+                  gap: 1.5,
+                  mb: 1.5,
+                }}
+              >
                 <Button
                   variant="contained"
                   color="primary"
                   size="large"
-                  fullWidth
-                  sx={{ borderRadius: 2.5, py: 1.75, fontWeight: 700, flex: 1, minWidth: 140 }}
+                  component={Link}
+                  href={contactHref}
+                  sx={{
+                    borderRadius: 2.5,
+                    py: 1.5,
+                    fontWeight: 700,
+                    flex: 1,
+                  }}
                 >
-                  Request a Quote
+                  Request a quote
                 </Button>
                 <Button
                   variant="contained"
-                  href={`https://wa.me/919876543210?text=I'm interested in ${encodeURIComponent(product.name)}`}
+                  href={whatsappUrl(`I'm interested in ${product.name}`)}
                   component="a"
                   target="_blank"
+                  rel="noopener noreferrer"
                   startIcon={<WhatsAppIcon />}
                   size="large"
                   sx={{
                     borderRadius: 2.5,
-                    py: 1.75,
+                    py: 1.5,
                     flex: 1,
-                    minWidth: 140,
                     bgcolor: "#25D366",
                     "&:hover": { bgcolor: "#1DAB52" },
                   }}
@@ -305,29 +542,45 @@ export default function ProductDetailPage() {
                   WhatsApp
                 </Button>
               </Box>
+
               <Button
-                href="tel:+919876543210"
+                href={`tel:${company.phoneTel}`}
                 component="a"
                 fullWidth
                 variant="outlined"
                 startIcon={<PhoneIcon />}
                 size="large"
-                sx={{ borderRadius: 2.5, py: 1.5 }}
+                sx={{
+                  borderRadius: 2.5,
+                  py: 1.35,
+                  mb: 3,
+                }}
               >
-                Call +91 98765 43210
+                Call {company.phone}
               </Button>
 
-              {/* Trust */}
-              <Box display="flex" gap={2} mt={3} flexWrap="wrap">
-                {[
-                  { icon: <VerifiedIcon sx={{ fontSize: 16 }} />, label: "ISO Certified" },
-                  { icon: <LocalShippingIcon sx={{ fontSize: 16 }} />, label: "Pan-India Delivery" },
-                  { icon: <CheckCircleIcon sx={{ fontSize: 16 }} />, label: "2-Year Warranty" },
-                ].map((t, i) => (
-                  <Box key={i} display="flex" gap={0.75} alignItems="center">
-                    <Box sx={{ color: "primary.main" }}>{t.icon}</Box>
-                    <Typography variant="caption" color="text.secondary" fontWeight={500}>
-                      {t.label}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 2,
+                }}
+              >
+                {trustItems.map(({ icon: Icon, label }) => (
+                  <Box
+                    key={label}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 0.75,
+                    }}
+                  >
+                    <Icon sx={{ fontSize: 18, color: "primary.main" }} />
+                    <Typography
+                      variant="caption"
+                      sx={{ color: "text.secondary", fontWeight: 500 }}
+                    >
+                      {label}
                     </Typography>
                   </Box>
                 ))}
@@ -336,59 +589,104 @@ export default function ProductDetailPage() {
           </Grid>
         </Grid>
 
-        {/* Tabs: Specifications + Inquiry */}
-        <Box mt={7}>
-          <Paper elevation={0} sx={{ borderRadius: 3, border: "1px solid rgba(0,0,0,0.06)", overflow: "hidden" }}>
+        {/* Tabs */}
+        <Box sx={{ mt: { xs: 5, md: 7 } }}>
+          <Paper
+            elevation={0}
+            sx={{
+              borderRadius: 3,
+              border: "1px solid rgba(0,0,0,0.06)",
+              overflow: "hidden",
+              bgcolor: "white",
+            }}
+          >
             <Tabs
               value={activeTab}
               onChange={(_, v) => setActiveTab(v)}
+              variant="scrollable"
+              scrollButtons="auto"
               sx={{
                 borderBottom: "1px solid rgba(0,0,0,0.08)",
-                px: 3,
+                px: { xs: 1, sm: 2 },
+                minHeight: 48,
                 "& .MuiTab-root": {
                   fontWeight: 600,
                   textTransform: "none",
-                  fontSize: "0.9rem",
+                  fontSize: "0.875rem",
+                  minHeight: 48,
                 },
               }}
             >
               <Tab label="Specifications" />
-              <Tab label="All Features" />
-              <Tab label="Send Inquiry" />
+              <Tab label="All features" />
+              <Tab label="Send inquiry" />
             </Tabs>
 
-            <Box p={4}>
+            <Box sx={{ p: { xs: 2.5, md: 4 } }}>
               {activeTab === 0 && (
                 <Box sx={{ overflowX: "auto" }}>
-                  <Table>
+                  <Table size="small">
                     <TableBody>
-                      {Object.entries(product.specifications).map(([key, val]) => (
-                        <TableRow
-                          key={key}
-                          sx={{ "&:nth-of-type(even)": { bgcolor: "#F8FAFC" } }}
-                        >
-                          <TableCell
-                            sx={{ fontWeight: 600, color: "text.primary", border: "none", py: 1.5, pl: 0, width: "35%" }}
+                      {Object.entries(product.specifications).map(
+                        ([key, val]) => (
+                          <TableRow
+                            key={key}
+                            sx={{
+                              "&:nth-of-type(even)": { bgcolor: "#F8FAFC" },
+                            }}
                           >
-                            {key}
-                          </TableCell>
-                          <TableCell sx={{ color: "text.secondary", border: "none", py: 1.5 }}>
-                            {val}
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                            <TableCell
+                              sx={{
+                                fontWeight: 600,
+                                color: "text.primary",
+                                border: "none",
+                                py: 1.5,
+                                pl: 0,
+                                width: "38%",
+                                verticalAlign: "top",
+                              }}
+                            >
+                              {key}
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "text.secondary",
+                                border: "none",
+                                py: 1.5,
+                                verticalAlign: "top",
+                              }}
+                            >
+                              {val}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      )}
                     </TableBody>
                   </Table>
                 </Box>
               )}
 
               {activeTab === 1 && (
-                <Grid container spacing={1.5}>
+                <Grid container spacing={2}>
                   {product.features.map((feat, i) => (
                     <Grid size={{ xs: 12, sm: 6, md: 4 }} key={i}>
-                      <Box display="flex" gap={1.5} alignItems="flex-start">
-                        <CheckCircleIcon color="primary" sx={{ fontSize: 18, mt: 0.2, flexShrink: 0 }} />
-                        <Typography variant="body2" color="text.secondary" lineHeight={1.6}>{feat}</Typography>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: 1.25,
+                        }}
+                      >
+                        <CheckCircleIcon
+                          color="primary"
+                          sx={{ fontSize: 18, flexShrink: 0, mt: 0.15 }}
+                        />
+                        <Typography
+                          variant="body2"
+                          sx={{ color: "text.secondary", lineHeight: 1.55 }}
+                        >
+                          {feat}
+                        </Typography>
                       </Box>
                     </Grid>
                   ))}
@@ -398,17 +696,28 @@ export default function ProductDetailPage() {
               {activeTab === 2 && (
                 <Grid container spacing={3}>
                   <Grid size={{ xs: 12, md: 7 }}>
-                    <Typography variant="h6" fontWeight={700} mb={3}>
-                      Inquire About {product.name}
+                    <Typography
+                      variant="h6"
+                      sx={{ fontWeight: 700, mb: 2.5 }}
+                    >
+                      Inquire about {product.name}
                     </Typography>
-                    <Grid container spacing={2.5}>
+                    <Grid container spacing={2}>
                       {[
-                        { label: "Full Name *", placeholder: "Rajesh Kumar" },
-                        { label: "Phone Number *", placeholder: "+91 98765 43210" },
-                        { label: "Email Address", placeholder: "rajesh@company.com" },
-                        { label: "Company Name", placeholder: "Patel Constructions Pvt. Ltd." },
-                        { label: "City / Location *", placeholder: "Mumbai, Maharashtra" },
-                        { label: "Quantity Required", placeholder: "e.g. 5 units" },
+                        { label: "Full name *", placeholder: "Your name" },
+                        {
+                          label: "Phone number *",
+                          placeholder: company.phone,
+                        },
+                        {
+                          label: "Email address",
+                          placeholder: company.email,
+                        },
+                        { label: "City / location *", placeholder: "Ranchi, Jharkhand" },
+                        {
+                          label: "Quantity required",
+                          placeholder: "e.g. 2 units",
+                        },
                       ].map((f, i) => (
                         <Grid size={{ xs: 12, sm: 6 }} key={i}>
                           <TextField
@@ -421,8 +730,8 @@ export default function ProductDetailPage() {
                       ))}
                       <Grid size={12}>
                         <TextField
-                          label="Additional Requirements"
-                          placeholder="Describe any customizations, delivery timeline, or special requirements..."
+                          label="Additional requirements"
+                          placeholder="Custom size, delivery timeline, site details..."
                           multiline
                           rows={3}
                           fullWidth
@@ -431,12 +740,19 @@ export default function ProductDetailPage() {
                       </Grid>
                       <Grid size={12}>
                         <Button
+                          component={Link}
+                          href={contactHref}
                           variant="contained"
                           color="secondary"
                           size="large"
-                          sx={{ borderRadius: 2, py: 1.5, px: 4, fontWeight: 700 }}
+                          sx={{
+                            borderRadius: 2,
+                            py: 1.5,
+                            px: 4,
+                            fontWeight: 700,
+                          }}
                         >
-                          Submit Inquiry →
+                          Go to contact form
                         </Button>
                       </Grid>
                     </Grid>
@@ -444,38 +760,73 @@ export default function ProductDetailPage() {
                   <Grid size={{ xs: 12, md: 5 }}>
                     <Paper
                       elevation={0}
-                      sx={{ p: 3, bgcolor: "#EFF6FF", borderRadius: 3, border: "1px solid #BFDBFE" }}
+                      sx={{
+                        p: 3,
+                        bgcolor: "#EFF6FF",
+                        borderRadius: 3,
+                        border: "1px solid #BFDBFE",
+                        height: "100%",
+                      }}
                     >
-                      <Typography variant="subtitle1" fontWeight={700} color="primary" mb={2}>
-                        Need it urgently?
+                      <Typography
+                        variant="subtitle1"
+                        sx={{ fontWeight: 700, color: "primary.main", mb: 2 }}
+                      >
+                        Talk to {company.salesManager}
                       </Typography>
-                      <Box display="flex" flexDirection="column" gap={2}>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "text.secondary", mb: 2.5 }}
+                      >
+                        {company.salesManagerTitle} · {company.shortName}
+                      </Typography>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 1.5,
+                        }}
+                      >
                         <Button
-                          href="tel:+919876543210"
+                          href={`tel:${company.phoneTel}`}
                           component="a"
                           variant="contained"
                           startIcon={<PhoneIcon />}
                           fullWidth
                           sx={{ borderRadius: 2 }}
                         >
-                          Call +91 98765 43210
+                          Call {company.phone}
                         </Button>
                         <Button
-                          href={`https://wa.me/919876543210?text=I want to inquire about ${encodeURIComponent(product.name)}`}
+                          href={whatsappUrl(
+                            `I want to inquire about ${product.name}`
+                          )}
                           component="a"
                           target="_blank"
+                          rel="noopener noreferrer"
                           variant="contained"
                           startIcon={<WhatsAppIcon />}
                           fullWidth
-                          sx={{ borderRadius: 2, bgcolor: "#25D366", "&:hover": { bgcolor: "#1DAB52" } }}
+                          sx={{
+                            borderRadius: 2,
+                            bgcolor: "#25D366",
+                            "&:hover": { bgcolor: "#1DAB52" },
+                          }}
                         >
-                          WhatsApp Us
+                          WhatsApp us
                         </Button>
                       </Box>
                       <Divider sx={{ my: 2.5 }} />
-                      <Typography variant="caption" color="text.secondary" lineHeight={1.6} display="block">
-                        Our team typically responds within 2 hours on business days.
-                        For urgent requirements, calling is the fastest option.
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: "text.secondary",
+                          lineHeight: 1.6,
+                          display: "block",
+                        }}
+                      >
+                        We typically respond within 2 hours on business days.
+                        For urgent site requirements, call or WhatsApp directly.
                       </Typography>
                     </Paper>
                   </Grid>
@@ -485,22 +836,97 @@ export default function ProductDetailPage() {
           </Paper>
         </Box>
 
-        {/* Related Products */}
         {related.length > 0 && (
-          <Box mt={8}>
-            <SectionHeader
-              badge="More to Explore"
-              title="Related"
-              highlight="Products"
-              subtitle=""
-            />
-            <Grid container spacing={3}>
+          <Box
+            component="section"
+            aria-labelledby="related-products-heading"
+            sx={{
+              mt: { xs: 6, md: 8 },
+              pt: { xs: 4, md: 5 },
+              borderTop: "1px solid rgba(0,0,0,0.08)",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                alignItems: { xs: "flex-start", sm: "flex-end" },
+                justifyContent: "space-between",
+                gap: 2,
+                mb: 3,
+              }}
+            >
+              <Box>
+                <Typography
+                  variant="overline"
+                  sx={{
+                    color: "primary.main",
+                    fontWeight: 700,
+                    letterSpacing: "0.08em",
+                    display: "block",
+                    mb: 0.75,
+                  }}
+                >
+                  More to explore
+                </Typography>
+                <Typography
+                  id="related-products-heading"
+                  variant="h5"
+                  component="h2"
+                  sx={{
+                    fontWeight: 800,
+                    color: "text.primary",
+                    lineHeight: 1.2,
+                    fontSize: { xs: "1.25rem", md: "1.5rem" },
+                  }}
+                >
+                  Related{" "}
+                  <Box component="span" sx={{ color: "secondary.main" }}>
+                    products
+                  </Box>
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: "text.secondary", mt: 0.75, maxWidth: 480 }}
+                >
+                  More {product.category.toLowerCase()} solutions you may like
+                </Typography>
+              </Box>
+              <Button
+                component={Link}
+                href={`/products?category=${product.categorySlug}`}
+                variant="outlined"
+                size="small"
+                sx={{
+                  borderRadius: 2,
+                  fontWeight: 600,
+                  flexShrink: 0,
+                  textTransform: "none",
+                }}
+              >
+                View all in {product.category}
+              </Button>
+            </Box>
+
+            <Box
+              sx={{
+                display: "grid",
+                gap: 3,
+                gridTemplateColumns: {
+                  xs: "1fr",
+                  sm:
+                    related.length === 1
+                      ? "minmax(0, 340px)"
+                      : "repeat(2, minmax(0, 1fr))",
+                  md: `repeat(${Math.min(related.length, 3)}, minmax(0, 1fr))`,
+                  lg: `repeat(${Math.min(related.length, 4)}, minmax(0, 1fr))`,
+                },
+              }}
+            >
               {related.map((p) => (
-                <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={p.id}>
-                  <ProductCard product={p} />
-                </Grid>
+                <ProductCard key={p.id} product={p} variant="compact" />
               ))}
-            </Grid>
+            </Box>
           </Box>
         )}
       </Container>

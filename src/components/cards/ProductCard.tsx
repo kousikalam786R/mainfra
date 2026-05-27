@@ -6,13 +6,11 @@ import Image from "next/image";
 import {
   Card,
   CardContent,
-  CardMedia,
   Box,
   Typography,
   Chip,
   Button,
   Rating,
-  IconButton,
 } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
@@ -28,6 +26,8 @@ export default function ProductCard({
   product,
   variant = "default",
 }: ProductCardProps) {
+  const imageHeight = variant === "compact" ? 180 : 220;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -43,10 +43,12 @@ export default function ProductCard({
           display: "flex",
           flexDirection: "column",
           overflow: "hidden",
+          borderRadius: 3,
           border: "1px solid",
           borderColor: "rgba(0,0,0,0.06)",
           boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
           transition: "all 0.3s ease",
+          bgcolor: "white",
           "&:hover": {
             boxShadow: "0 12px 40px rgba(0,0,0,0.12)",
             borderColor: "rgba(21,101,192,0.15)",
@@ -56,6 +58,7 @@ export default function ProductCard({
             "& .view-btn": {
               bgcolor: "secondary.main",
               color: "white",
+              borderColor: "secondary.main",
             },
           },
         }}
@@ -65,111 +68,164 @@ export default function ProductCard({
           sx={{
             position: "relative",
             overflow: "hidden",
-            height: variant === "compact" ? 180 : 220,
+            height: imageHeight,
+            flexShrink: 0,
             bgcolor: "#F1F5F9",
           }}
         >
           <Box
             className="product-image"
             sx={{
-              width: "100%",
-              height: "100%",
-              backgroundImage: `url(${product.images[0]})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              position: "absolute",
+              inset: 0,
               transition: "transform 0.5s ease",
             }}
-          />
-          {/* Overlay badges */}
-          <Box
-            sx={{
-              position: "absolute",
-              top: 12,
-              left: 12,
-              display: "flex",
-              gap: 0.75,
-              flexWrap: "wrap",
-            }}
           >
-            {product.isBestseller && (
-              <Chip
-                label="Bestseller"
-                size="small"
-                sx={{
-                  bgcolor: "#F57C00",
-                  color: "white",
-                  fontWeight: 700,
-                  fontSize: "0.65rem",
-                  height: 22,
-                }}
-              />
-            )}
-            {product.isNew && (
-              <Chip
-                label="New"
-                size="small"
-                sx={{
-                  bgcolor: "#16A34A",
-                  color: "white",
-                  fontWeight: 700,
-                  fontSize: "0.65rem",
-                  height: 22,
-                }}
-              />
-            )}
+            <Image
+              src={product.images[0]}
+              alt={product.name}
+              fill
+              sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              style={{ objectFit: "cover" }}
+            />
           </Box>
+
+          {(product.isBestseller || product.isNew) && (
+            <Box
+              sx={{
+                position: "absolute",
+                top: 12,
+                left: 12,
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 0.75,
+                zIndex: 1,
+              }}
+            >
+              {product.isBestseller && (
+                <Chip
+                  label="Bestseller"
+                  size="small"
+                  sx={{
+                    bgcolor: "#F57C00",
+                    color: "white",
+                    fontWeight: 700,
+                    fontSize: "0.65rem",
+                    height: 24,
+                    "& .MuiChip-label": { px: 1 },
+                  }}
+                />
+              )}
+              {product.isNew && (
+                <Chip
+                  label="New"
+                  size="small"
+                  sx={{
+                    bgcolor: "#16A34A",
+                    color: "white",
+                    fontWeight: 700,
+                    fontSize: "0.65rem",
+                    height: 24,
+                    "& .MuiChip-label": { px: 1 },
+                  }}
+                />
+              )}
+            </Box>
+          )}
         </Box>
 
         <CardContent
           sx={{
             p: 2.5,
+            pt: 2,
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            gap: 1,
+            gap: 1.25,
+            "&:last-child": { pb: 2.5 },
           }}
         >
           {/* Category */}
-          <Typography variant="caption" color="primary" fontWeight={600} sx={{ textTransform: "uppercase", letterSpacing: "0.05em" }}>
+          <Typography
+            variant="caption"
+            sx={{
+              color: "primary.main",
+              fontWeight: 600,
+              textTransform: "uppercase",
+              letterSpacing: "0.06em",
+              lineHeight: 1.2,
+              display: "block",
+            }}
+          >
             {product.category}
           </Typography>
 
           {/* Name */}
           <Typography
+            component={Link}
+            href={`/products/${product.slug}`}
             variant="h6"
-            fontWeight={700}
             sx={{
-              lineHeight: 1.3,
+              fontWeight: 700,
+              lineHeight: 1.35,
               display: "-webkit-box",
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
               color: "text.primary",
-              fontSize: variant === "compact" ? "0.9rem" : "1rem",
+              fontSize: variant === "compact" ? "0.95rem" : "1.05rem",
+              textDecoration: "none",
+              m: 0,
+              "&:hover": { color: "primary.main" },
             }}
           >
             {product.name}
           </Typography>
 
           {/* Rating */}
-          <Box display="flex" alignItems="center" gap={1}>
-            <Rating value={product.rating} precision={0.1} size="small" readOnly />
-            <Typography variant="caption" color="text.secondary">
-              ({product.reviews})
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 0.75,
+              minHeight: 22,
+            }}
+          >
+            <Rating
+              value={product.rating}
+              precision={0.1}
+              size="small"
+              readOnly
+              sx={{
+                flexShrink: 0,
+                "& .MuiRating-icon": { fontSize: 16 },
+              }}
+            />
+            <Typography
+              variant="caption"
+              sx={{
+                color: "text.secondary",
+                lineHeight: 1,
+                pt: "2px",
+              }}
+            >
+              {product.rating.toFixed(1)} ({product.reviews})
             </Typography>
           </Box>
 
-          {/* Short description */}
+          {/* Description */}
           {variant !== "compact" && (
             <Typography
               variant="body2"
-              color="text.secondary"
               sx={{
+                color: "text.secondary",
                 display: "-webkit-box",
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: "vertical",
                 overflow: "hidden",
-                lineHeight: 1.6,
+                lineHeight: 1.55,
+                fontSize: "0.8125rem",
+                m: 0,
               }}
             >
               {product.shortDescription}
@@ -177,35 +233,66 @@ export default function ProductCard({
           )}
 
           {/* Delivery */}
-          <Box display="flex" alignItems="center" gap={0.75} mt="auto" pt={1}>
-            <LocalShippingIcon sx={{ fontSize: 14, color: "text.secondary" }} />
-            <Typography variant="caption" color="text.secondary">
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 0.75,
+              mt: variant === "compact" ? "auto" : 0.25,
+            }}
+          >
+            <LocalShippingIcon
+              sx={{
+                fontSize: 16,
+                color: "text.secondary",
+                flexShrink: 0,
+              }}
+            />
+            <Typography
+              variant="caption"
+              sx={{
+                color: "text.secondary",
+                lineHeight: 1.4,
+                m: 0,
+              }}
+            >
               Delivery in {product.deliveryTime}
             </Typography>
           </Box>
 
           {/* Price + CTA */}
           <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            pt={1}
-            borderTop="1px solid"
-            borderColor="rgba(0,0,0,0.06)"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 1.5,
+              pt: 2,
+              mt: "auto",
+              borderTop: "1px solid",
+              borderColor: "rgba(0,0,0,0.06)",
+            }}
           >
-            <Box>
+            <Box sx={{ minWidth: 0, flex: 1 }}>
               <Typography
                 variant="caption"
-                color="text.secondary"
-                display="block"
+                sx={{
+                  color: "text.secondary",
+                  display: "block",
+                  lineHeight: 1.3,
+                  mb: 0.25,
+                }}
               >
                 Starting from
               </Typography>
               <Typography
-                variant="h6"
-                fontWeight={800}
-                color="primary.main"
-                fontSize="1.1rem"
+                sx={{
+                  fontWeight: 800,
+                  color: "primary.main",
+                  fontSize: "1.125rem",
+                  lineHeight: 1.2,
+                  m: 0,
+                }}
               >
                 {product.price}
               </Typography>
@@ -216,11 +303,24 @@ export default function ProductCard({
               href={`/products/${product.slug}`}
               size="small"
               variant="outlined"
-              endIcon={<ArrowForwardIcon fontSize="small" />}
+              endIcon={
+                <ArrowForwardIcon sx={{ fontSize: 16 }} />
+              }
               sx={{
                 borderRadius: 2,
-                fontSize: "0.8rem",
+                fontSize: "0.8125rem",
+                fontWeight: 600,
+                minHeight: 40,
+                px: 2,
+                flexShrink: 0,
+                whiteSpace: "nowrap",
                 transition: "all 0.2s ease",
+                "& .MuiButton-endIcon": {
+                  ml: 0.5,
+                  mr: 0,
+                  display: "inherit",
+                  alignItems: "center",
+                },
               }}
             >
               View

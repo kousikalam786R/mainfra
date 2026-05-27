@@ -26,6 +26,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import SendIcon from "@mui/icons-material/Send";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { motion } from "framer-motion";
+import { company, whatsappUrl } from "@/data/company";
 
 const productCategories = [
   "Portable Office Cabin",
@@ -39,28 +40,13 @@ const productCategories = [
 
 const offices = [
   {
-    city: "Noida (HQ & Factory)",
-    address: "Plot No. 42, Industrial Area Phase-II, Noida, UP – 201301",
-    phone: "+91 98765 43210",
-    email: "hq@mainfraportablecabin.com",
-    hours: "Mon–Sat: 9:00 AM – 6:00 PM",
+    city: `${company.address.city} — Head Office & Factory`,
+    address: company.addressFull,
+    phone: company.phone,
+    email: company.email,
+    contactPerson: `${company.salesManager} · ${company.salesManagerTitle}`,
+    hours: company.hours,
     isPrimary: true,
-  },
-  {
-    city: "Mumbai",
-    address: "Unit 8, Bharat Industrial Estate, Kurla, Mumbai – 400070",
-    phone: "+91 98765 43211",
-    email: "mumbai@mainfraportablecabin.com",
-    hours: "Mon–Sat: 9:00 AM – 6:00 PM",
-    isPrimary: false,
-  },
-  {
-    city: "Bengaluru",
-    address: "No. 15, Electronic City Phase I, Bengaluru – 560100",
-    phone: "+91 98765 43212",
-    email: "blr@mainfraportablecabin.com",
-    hours: "Mon–Sat: 9:30 AM – 6:00 PM",
-    isPrimary: false,
   },
 ];
 
@@ -92,26 +78,52 @@ export default function ContactPage() {
       <Box
         sx={{
           background: "linear-gradient(135deg, #0A1628, #1565C0)",
-          py: { xs: 6, md: 8 },
-          color: "white",
+          py: { xs: 1.5, md: 2 },
+          color: "#FFFFFF",
         }}
       >
         <Container maxWidth="xl">
-          <Breadcrumbs sx={{ mb: 2.5 }}>
+          <Breadcrumbs sx={{ mb: 0.5, "& .MuiBreadcrumbs-separator": { mx: 0.5 } }}>
             <MuiLink
               component={Link}
               href="/"
-              sx={{ display: "flex", alignItems: "center", gap: 0.5, color: "rgba(255,255,255,0.6)" }}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.35,
+                color: "rgba(255,255,255,0.65)",
+                fontSize: "0.75rem",
+              }}
             >
-              <HomeIcon fontSize="small" /> Home
+              <HomeIcon sx={{ fontSize: 14 }} /> Home
             </MuiLink>
-            <Typography color="rgba(255,255,255,0.85)" fontSize="0.875rem">Contact</Typography>
+            <Typography sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.75rem" }}>
+              Contact
+            </Typography>
           </Breadcrumbs>
-          <Typography variant="h2" color="white" mb={1.5}>
+          <Typography
+            variant="h5"
+            component="h1"
+            sx={{
+              color: "#FFFFFF",
+              mb: 0.5,
+              fontWeight: 700,
+              fontSize: { xs: "1.25rem", md: "1.5rem" },
+              lineHeight: 1.15,
+            }}
+          >
             Get in Touch
           </Typography>
-          <Typography color="rgba(255,255,255,0.7)" fontSize="1.05rem" maxWidth={520}>
-            Our team responds within 2 hours. Tell us your requirements and we'll get back with a custom quote.
+          <Typography
+            sx={{
+              color: "rgba(255,255,255,0.8)",
+              fontSize: { xs: "0.75rem", md: "0.8125rem" },
+              maxWidth: 520,
+              lineHeight: 1.4,
+              m: 0,
+            }}
+          >
+            Our team responds within 2 hours. Tell us your requirements and we&apos;ll get back with a custom quote.
           </Typography>
         </Container>
       </Box>
@@ -133,10 +145,10 @@ export default function ContactPage() {
                   border: "1px solid rgba(0,0,0,0.06)",
                 }}
               >
-                <Typography variant="h5" fontWeight={700} mb={0.75}>
+                <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.75, color: "text.primary" }}>
                   Send Us a Message
                 </Typography>
-                <Typography variant="body2" color="text.secondary" mb={4}>
+                <Typography variant="body2" sx={{ color: "text.secondary", mb: 4 }}>
                   Fill in the form below and our sales team will respond with a detailed quote.
                 </Typography>
 
@@ -146,7 +158,7 @@ export default function ContactPage() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <Box textAlign="center" py={5}>
+                    <Box sx={{ textAlign: "center", py: 5 }}>
                       <Box
                         sx={{
                           width: 80,
@@ -162,10 +174,13 @@ export default function ContactPage() {
                       >
                         <CheckCircleIcon sx={{ fontSize: 48, color: "#16A34A" }} />
                       </Box>
-                      <Typography variant="h5" fontWeight={700} mb={1.5}>
+                      <Typography variant="h5" sx={{ fontWeight: 700, mb: 1.5, color: "text.primary" }}>
                         Inquiry Submitted!
                       </Typography>
-                      <Typography variant="body1" color="text.secondary" mb={3} maxWidth={400} mx="auto">
+                      <Typography
+                        variant="body1"
+                        sx={{ color: "text.secondary", mb: 3, maxWidth: 400, mx: "auto" }}
+                      >
                         Thank you, {formData.name || "there"}! Our team will review your inquiry and
                         get back to you within 2 hours on business days.
                       </Typography>
@@ -194,7 +209,7 @@ export default function ContactPage() {
                       <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
                           label="Phone Number *"
-                          placeholder="+91 98765 43210"
+                          placeholder={company.phone}
                           fullWidth
                           required
                           value={formData.phone}
@@ -280,7 +295,10 @@ export default function ContactPage() {
                         >
                           Send Inquiry
                         </Button>
-                        <Typography variant="caption" color="text.secondary" display="block" mt={1.5}>
+                        <Typography
+                          variant="caption"
+                          sx={{ color: "text.secondary", display: "block", mt: 1.5 }}
+                        >
                           * Required fields · We respond within 2 hours on business days
                         </Typography>
                       </Grid>
@@ -293,7 +311,7 @@ export default function ContactPage() {
 
           {/* Sidebar */}
           <Grid size={{ xs: 12, lg: 5 }}>
-            <Box display="flex" flexDirection="column" gap={3}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
               {/* Quick contact */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
@@ -305,105 +323,124 @@ export default function ContactPage() {
                   sx={{
                     p: 3.5,
                     borderRadius: 3,
-                    background: "linear-gradient(135deg, #0A1628, #1565C0)",
-                    color: "white",
-                    border: "none",
+                    background: "linear-gradient(145deg, #0A1628 0%, #0D47A1 100%)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    color: "#FFFFFF",
                   }}
                 >
-                  <Typography variant="h6" fontWeight={700} mb={2.5}>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: 700, mb: 2.5, color: "#FFFFFF" }}
+                  >
                     Prefer to Talk Directly?
                   </Typography>
-                  <Box display="flex" flexDirection="column" gap={1.5} mb={3}>
-                    <Box
-                      component="a"
-                      href="tel:+919876543210"
-                      display="flex"
-                      alignItems="center"
-                      gap={1.5}
-                      sx={{
-                        p: 2,
-                        bgcolor: "rgba(255,255,255,0.08)",
-                        borderRadius: 2,
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        textDecoration: "none",
-                        color: "white",
-                        transition: "all 0.2s ease",
-                        "&:hover": { bgcolor: "rgba(255,255,255,0.15)" },
-                      }}
-                    >
-                      <PhoneIcon sx={{ color: "#FF9800" }} />
-                      <Box>
-                        <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.6)" }}>
-                          Call Us
-                        </Typography>
-                        <Typography fontWeight={700} fontSize="0.95rem">
-                          +91 98765 43210
-                        </Typography>
+                  <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, mb: 3 }}>
+                    {[
+                      {
+                        href: `tel:${company.phoneTel}`,
+                        icon: <PhoneIcon sx={{ color: "#FF9800", fontSize: 26 }} />,
+                        label: `${company.salesManager} · ${company.salesManagerTitle}`,
+                        value: company.phone,
+                        bg: "rgba(255,255,255,0.1)",
+                        border: "rgba(255,255,255,0.15)",
+                        hoverBg: "rgba(255,255,255,0.16)",
+                      },
+                      {
+                        href: whatsappUrl("Hello, I would like to inquire about portable cabins."),
+                        icon: <WhatsAppIcon sx={{ color: "#25D366", fontSize: 26 }} />,
+                        label: "WhatsApp",
+                        value: "Chat with us instantly",
+                        bg: "rgba(37,211,102,0.18)",
+                        border: "rgba(37,211,102,0.35)",
+                        hoverBg: "rgba(37,211,102,0.28)",
+                        external: true,
+                      },
+                      {
+                        href: `mailto:${company.email}`,
+                        icon: <EmailIcon sx={{ color: "#FF9800", fontSize: 26 }} />,
+                        label: "Email",
+                        value: company.email,
+                        bg: "rgba(255,255,255,0.1)",
+                        border: "rgba(255,255,255,0.15)",
+                        hoverBg: "rgba(255,255,255,0.16)",
+                      },
+                    ].map((item) => (
+                      <Box
+                        key={item.label}
+                        component="a"
+                        href={item.href}
+                        {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 2,
+                          p: 2,
+                          bgcolor: item.bg,
+                          borderRadius: 2,
+                          border: "1px solid",
+                          borderColor: item.border,
+                          textDecoration: "none",
+                          transition: "all 0.2s ease",
+                          "&:hover": { bgcolor: item.hoverBg },
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexShrink: 0,
+                            width: 40,
+                            height: 40,
+                          }}
+                        >
+                          {item.icon}
+                        </Box>
+                        <Box sx={{ minWidth: 0, flex: 1 }}>
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              color: "rgba(255,255,255,0.75)",
+                              display: "block",
+                              mb: 0.25,
+                              lineHeight: 1.3,
+                            }}
+                          >
+                            {item.label}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              fontWeight: 700,
+                              fontSize: "0.9375rem",
+                              color: "#FFFFFF",
+                              lineHeight: 1.35,
+                              wordBreak: "break-word",
+                            }}
+                          >
+                            {item.value}
+                          </Typography>
+                        </Box>
                       </Box>
-                    </Box>
-
-                    <Box
-                      component="a"
-                      href="https://wa.me/919876543210"
-                      target="_blank"
-                      display="flex"
-                      alignItems="center"
-                      gap={1.5}
-                      sx={{
-                        p: 2,
-                        bgcolor: "rgba(37,211,102,0.15)",
-                        borderRadius: 2,
-                        border: "1px solid rgba(37,211,102,0.25)",
-                        textDecoration: "none",
-                        color: "white",
-                        transition: "all 0.2s ease",
-                        "&:hover": { bgcolor: "rgba(37,211,102,0.25)" },
-                      }}
-                    >
-                      <WhatsAppIcon sx={{ color: "#25D366" }} />
-                      <Box>
-                        <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.6)" }}>
-                          WhatsApp
-                        </Typography>
-                        <Typography fontWeight={700} fontSize="0.95rem">
-                          Chat with us instantly
-                        </Typography>
-                      </Box>
-                    </Box>
-
-                    <Box
-                      component="a"
-                      href="mailto:info@mainfraportablecabin.com"
-                      display="flex"
-                      alignItems="center"
-                      gap={1.5}
-                      sx={{
-                        p: 2,
-                        bgcolor: "rgba(255,255,255,0.08)",
-                        borderRadius: 2,
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        textDecoration: "none",
-                        color: "white",
-                        transition: "all 0.2s ease",
-                        "&:hover": { bgcolor: "rgba(255,255,255,0.15)" },
-                      }}
-                    >
-                      <EmailIcon sx={{ color: "#FF9800" }} />
-                      <Box>
-                        <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.6)" }}>
-                          Email
-                        </Typography>
-                        <Typography fontWeight={700} fontSize="0.95rem">
-                          info@mainfraportablecabin.com
-                        </Typography>
-                      </Box>
-                    </Box>
+                    ))}
                   </Box>
 
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <AccessTimeIcon sx={{ fontSize: 16, color: "rgba(255,255,255,0.5)" }} />
-                    <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.6)" }}>
-                      Mon–Sat: 9:00 AM – 6:00 PM IST
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      pt: 2,
+                      borderTop: "1px solid rgba(255,255,255,0.12)",
+                    }}
+                  >
+                    <AccessTimeIcon
+                      sx={{ fontSize: 18, color: "#FF9800", flexShrink: 0 }}
+                    />
+                    <Typography
+                      variant="caption"
+                      sx={{ color: "rgba(255,255,255,0.8)", lineHeight: 1.5 }}
+                    >
+                      {company.hours}
                     </Typography>
                   </Box>
                 </Paper>
@@ -435,25 +472,34 @@ export default function ContactPage() {
                         sx={{ position: "absolute", top: 12, right: 12, fontWeight: 700, fontSize: "0.65rem" }}
                       />
                     )}
-                    <Typography variant="subtitle1" fontWeight={700} mb={1.5}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 1.5, color: "text.primary" }}>
                       {office.city}
                     </Typography>
-                    <Box display="flex" flexDirection="column" gap={1}>
-                      <Box display="flex" gap={1} alignItems="flex-start">
-                        <LocationOnIcon sx={{ fontSize: 16, color: "text.secondary", mt: 0.2, flexShrink: 0 }} />
-                        <Typography variant="body2" color="text.secondary" lineHeight={1.5}>
+                    {office.contactPerson && (
+                      <Chip
+                        label={office.contactPerson}
+                        size="small"
+                        color="primary"
+                        variant="outlined"
+                        sx={{ mb: 1.5, fontWeight: 600, width: "fit-content" }}
+                      />
+                    )}
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: 1.25 }}>
+                      <Box sx={{ display: "flex", gap: 1.25, alignItems: "flex-start" }}>
+                        <LocationOnIcon sx={{ fontSize: 18, color: "primary.main", mt: 0.2, flexShrink: 0 }} />
+                        <Typography variant="body2" sx={{ color: "text.secondary", lineHeight: 1.6 }}>
                           {office.address}
                         </Typography>
                       </Box>
-                      <Box display="flex" gap={1} alignItems="center">
-                        <PhoneIcon sx={{ fontSize: 16, color: "text.secondary" }} />
-                        <Typography variant="body2" color="text.secondary">
+                      <Box sx={{ display: "flex", gap: 1.25, alignItems: "center" }}>
+                        <PhoneIcon sx={{ fontSize: 18, color: "primary.main", flexShrink: 0 }} />
+                        <Typography variant="body2" sx={{ color: "text.secondary" }}>
                           {office.phone}
                         </Typography>
                       </Box>
-                      <Box display="flex" gap={1} alignItems="center">
-                        <AccessTimeIcon sx={{ fontSize: 16, color: "text.secondary" }} />
-                        <Typography variant="body2" color="text.secondary">
+                      <Box sx={{ display: "flex", gap: 1.25, alignItems: "center" }}>
+                        <AccessTimeIcon sx={{ fontSize: 18, color: "primary.main", flexShrink: 0 }} />
+                        <Typography variant="body2" sx={{ color: "text.secondary" }}>
                           {office.hours}
                         </Typography>
                       </Box>
@@ -501,13 +547,13 @@ export default function ContactPage() {
                     }}
                   >
                     <LocationOnIcon sx={{ fontSize: 36, color: "#1565C0" }} />
-                    <Typography variant="subtitle2" fontWeight={700} color="primary">
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: "primary.main" }}>
                       View on Google Maps
                     </Typography>
                     <Button
                       variant="contained"
                       size="small"
-                      href="https://maps.google.com"
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(company.addressFull)}`}
                       component="a"
                       target="_blank"
                       sx={{ borderRadius: 2, mt: 0.5 }}

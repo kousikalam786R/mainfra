@@ -17,6 +17,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { company } from "@/data/company";
 
 export default function CTASection() {
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
@@ -114,7 +115,7 @@ export default function CTASection() {
                     Get Free Quote
                   </Button>
                   <Button
-                    href="tel:+919876543210"
+                    href={`tel:${company.phoneTel}`}
                     component="a"
                     variant="outlined"
                     size="large"
@@ -138,14 +139,14 @@ export default function CTASection() {
                 <Box display="flex" gap={3} flexWrap="wrap">
                   <Box display="flex" gap={1} alignItems="center">
                     <PhoneIcon sx={{ color: "#FF9800", fontSize: 18 }} />
-                    <Typography variant="body2" color="rgba(255,255,255,0.7)">
-                      +91 98765 43210
+                    <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.7)" }}>
+                      {company.phone}
                     </Typography>
                   </Box>
                   <Box display="flex" gap={1} alignItems="center">
                     <EmailIcon sx={{ color: "#FF9800", fontSize: 18 }} />
-                    <Typography variant="body2" color="rgba(255,255,255,0.7)">
-                      info@mainfraportablecabin.com
+                    <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.7)" }}>
+                      {company.email}
                     </Typography>
                   </Box>
                 </Box>
@@ -170,7 +171,7 @@ export default function CTASection() {
                 <Box display="flex" flexDirection="column" gap={2.5}>
                   {[
                     { label: "Your Name", placeholder: "Rajesh Kumar" },
-                    { label: "Phone Number", placeholder: "+91 98765 43210" },
+                    { label: "Phone Number", placeholder: company.phone },
                     { label: "Company / Organization", placeholder: "Construction Pvt. Ltd." },
                   ].map((field) => (
                     <TextField

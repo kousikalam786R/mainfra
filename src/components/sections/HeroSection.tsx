@@ -80,7 +80,8 @@ export default function HeroSection() {
     <Box
       sx={{
         position: "relative",
-        minHeight: { xs: "90vh", md: "88vh" },
+        minHeight: { xs: "auto", md: "auto" },
+        py: { xs: 5, md: 7 },
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
@@ -111,13 +112,13 @@ export default function HeroSection() {
           position: "absolute",
           inset: 0,
           background:
-            "linear-gradient(105deg, rgba(10,22,40,0.88) 0%, rgba(10,22,40,0.65) 55%, rgba(10,22,40,0.3) 100%)",
+            "linear-gradient(105deg, rgba(10,22,40,0.92) 0%, rgba(10,22,40,0.78) 50%, rgba(10,22,40,0.55) 100%)",
           zIndex: 1,
         }}
       />
 
       {/* Content */}
-      <Container maxWidth="xl" sx={{ position: "relative", zIndex: 2, py: { xs: 6, md: 8 } }}>
+      <Container maxWidth="xl" sx={{ position: "relative", zIndex: 2, py: { xs: 4, md: 5 } }}>
         <Grid container spacing={4} alignItems="center">
           <Grid size={{ xs: 12, md: 7, lg: 6 }}>
             <AnimatePresence mode="wait">

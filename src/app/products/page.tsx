@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, Suspense } from "react";
+import React, { useState, useMemo, Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   Box,
@@ -20,7 +20,6 @@ import {
   IconButton,
   Drawer,
   Button,
-  Badge,
   Grid,
 } from "@mui/material";
 
@@ -53,6 +52,11 @@ function ProductsContent() {
   const [page, setPage] = useState(1);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  useEffect(() => {
+    setSelectedCategory(defaultCategory);
+    setPage(1);
+  }, [defaultCategory]);
+
   const filtered = useMemo(() => {
     let result = [...products];
 
@@ -72,15 +76,17 @@ function ProductsContent() {
 
     switch (sort) {
       case "price-asc":
-        result.sort((a, b) =>
-          parseInt(a.price.replace(/[^0-9]/g, "")) -
-          parseInt(b.price.replace(/[^0-9]/g, ""))
+        result.sort(
+          (a, b) =>
+            parseInt(a.price.replace(/[^0-9]/g, "")) -
+            parseInt(b.price.replace(/[^0-9]/g, ""))
         );
         break;
       case "price-desc":
-        result.sort((a, b) =>
-          parseInt(b.price.replace(/[^0-9]/g, "")) -
-          parseInt(a.price.replace(/[^0-9]/g, ""))
+        result.sort(
+          (a, b) =>
+            parseInt(b.price.replace(/[^0-9]/g, "")) -
+            parseInt(a.price.replace(/[^0-9]/g, ""))
         );
         break;
       case "rating":
@@ -95,7 +101,10 @@ function ProductsContent() {
   }, [search, selectedCategory, sort]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
-  const paginated = filtered.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+  const paginated = filtered.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE
+  );
 
   const handleCategoryChange = (slug: string) => {
     setSelectedCategory(slug);
@@ -103,15 +112,34 @@ function ProductsContent() {
     setDrawerOpen(false);
   };
 
-  const activeFilters =
-    (selectedCategory !== "all" ? 1 : 0) + (search ? 1 : 0);
+  const activeFilters = (selectedCategory !== "all" ? 1 : 0) + (search ? 1 : 0);
+
+  const clearAllFilters = () => {
+    setSelectedCategory("all");
+    setSearch("");
+    setPage(1);
+  };
 
   const FilterSidebar = () => (
     <Box>
-      <Typography variant="overline" fontWeight={700} color="text.secondary" letterSpacing={1.5}>
+      <Typography
+        variant="overline"
+        sx={{
+          fontWeight: 700,
+          color: "text.secondary",
+          letterSpacing: 1.5,
+        }}
+      >
         Categories
       </Typography>
-      <Box display="flex" flexDirection="column" gap={0.5} mt={1.5}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 0.5,
+          mt: 1.5,
+        }}
+      >
         <Box
           onClick={() => handleCategoryChange("all")}
           sx={{
@@ -130,7 +158,7 @@ function ProductsContent() {
           }}
         >
           <span>All Products</span>
-          <Typography variant="caption" color="text.secondary">
+          <Typography variant="caption" sx={{ color: "text.secondary" }}>
             {products.length}
           </Typography>
         </Box>
@@ -143,8 +171,10 @@ function ProductsContent() {
               py: 1,
               borderRadius: 2,
               cursor: "pointer",
-              bgcolor: selectedCategory === cat.slug ? "#EFF6FF" : "transparent",
-              color: selectedCategory === cat.slug ? "primary.main" : "text.primary",
+              bgcolor:
+                selectedCategory === cat.slug ? "#EFF6FF" : "transparent",
+              color:
+                selectedCategory === cat.slug ? "primary.main" : "text.primary",
               fontWeight: selectedCategory === cat.slug ? 700 : 400,
               fontSize: "0.875rem",
               display: "flex",
@@ -154,7 +184,7 @@ function ProductsContent() {
             }}
           >
             <span>{cat.name}</span>
-            <Typography variant="caption" color="text.secondary">
+            <Typography variant="caption" sx={{ color: "text.secondary" }}>
               {cat.count}
             </Typography>
           </Box>
@@ -163,11 +193,34 @@ function ProductsContent() {
 
       <Divider sx={{ my: 3 }} />
 
-      <Typography variant="overline" fontWeight={700} color="text.secondary" letterSpacing={1.5}>
+      <Typography
+        variant="overline"
+        sx={{
+          fontWeight: 700,
+          color: "text.secondary",
+          letterSpacing: 1.5,
+        }}
+      >
         Tags
       </Typography>
-      <Box display="flex" flexWrap="wrap" gap={0.75} mt={1.5}>
-        {["portable", "cabin", "modular", "industrial", "premium", "economy", "security", "storage"].map((tag) => (
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 0.75,
+          mt: 1.5,
+        }}
+      >
+        {[
+          "portable",
+          "cabin",
+          "modular",
+          "industrial",
+          "premium",
+          "economy",
+          "security",
+          "storage",
+        ].map((tag) => (
           <Chip
             key={tag}
             label={tag}
@@ -176,7 +229,11 @@ function ProductsContent() {
             sx={{
               borderRadius: 1.5,
               cursor: "pointer",
-              "&:hover": { bgcolor: "#EFF6FF", borderColor: "primary.main", color: "primary.main" },
+              "&:hover": {
+                bgcolor: "#EFF6FF",
+                borderColor: "primary.main",
+                color: "primary.main",
+              },
             }}
           />
         ))}
@@ -186,144 +243,256 @@ function ProductsContent() {
 
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: "#F8FAFC" }}>
-      {/* Page header */}
+      {/* Header — matches Gallery */}
       <Box
         sx={{
           background: "linear-gradient(135deg, #0A1628, #1565C0)",
-          py: { xs: 5, md: 7 },
-          color: "white",
+          py: { xs: 1.5, md: 2 },
+          color: "#FFFFFF",
         }}
       >
         <Container maxWidth="xl">
-          <Breadcrumbs sx={{ mb: 2 }} aria-label="breadcrumb">
+          <Breadcrumbs
+            aria-label="breadcrumb"
+            sx={{ mb: 0.5, "& .MuiBreadcrumbs-separator": { mx: 0.5 } }}
+          >
             <MuiLink
               component={Link}
               href="/"
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: 0.5,
-                color: "rgba(255,255,255,0.6)",
-                "&:hover": { color: "white" },
+                gap: 0.35,
+                color: "rgba(255,255,255,0.65)",
+                fontSize: "0.75rem",
+                textDecoration: "none",
+                "&:hover": { color: "rgba(255,255,255,0.9)" },
               }}
             >
-              <HomeIcon fontSize="small" /> Home
+              <HomeIcon sx={{ fontSize: 14 }} /> Home
             </MuiLink>
-            <Typography color="rgba(255,255,255,0.8)" fontSize="0.875rem">
+            <Typography sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.75rem" }}>
               Products
             </Typography>
           </Breadcrumbs>
-          <Typography variant="h2" color="white" mb={1}>
+          <Typography
+            variant="h5"
+            component="h1"
+            sx={{
+              color: "#FFFFFF",
+              mb: 0.5,
+              fontWeight: 700,
+              fontSize: { xs: "1.25rem", md: "1.5rem" },
+              lineHeight: 1.15,
+            }}
+          >
             Our Products
           </Typography>
-          <Typography color="rgba(255,255,255,0.7)" fontSize="1.05rem">
-            Premium portable structures, delivered pan-India
+          <Typography
+            sx={{
+              color: "rgba(255,255,255,0.8)",
+              fontSize: { xs: "0.75rem", md: "0.8125rem" },
+              maxWidth: 520,
+              lineHeight: 1.4,
+              m: 0,
+            }}
+          >
+            Premium portable structures, modular offices, and container solutions —
+            delivered pan-India.
           </Typography>
         </Container>
       </Box>
 
-      <Container maxWidth="xl" sx={{ py: 5 }}>
-        {/* Top bar */}
-        <Box
-          display="flex"
-          alignItems={{ xs: "flex-start", sm: "center" }}
-          justifyContent="space-between"
-          flexDirection={{ xs: "column", sm: "row" }}
-          gap={2}
-          mb={4}
+      <Container maxWidth="xl" sx={{ py: 4 }}>
+        {/* Search + sort toolbar */}
+        <Paper
+          elevation={0}
+          sx={{
+            p: { xs: 2, sm: 2.5 },
+            mb: 3,
+            borderRadius: 3,
+            border: "1px solid rgba(0,0,0,0.06)",
+            bgcolor: "white",
+          }}
         >
-          {/* Search */}
-          <Box display="flex" gap={1.5} alignItems="center" flex={1} maxWidth={{ sm: 480 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              alignItems: { xs: "stretch", md: "center" },
+              gap: 2,
+            }}
+          >
             <TextField
-              placeholder="Search products..."
+              placeholder="Search by name, category, or keyword..."
               value={search}
-              onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
               size="small"
               fullWidth
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon color="action" fontSize="small" />
-                  </InputAdornment>
-                ),
-                sx: { borderRadius: 2, bgcolor: "white" },
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon sx={{ fontSize: 20, color: "text.secondary" }} />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              sx={{
+                flex: 1,
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  bgcolor: "#F8FAFC",
+                },
               }}
             />
-            <Badge badgeContent={activeFilters} color="primary" invisible={activeFilters === 0}>
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5,
+                flexShrink: 0,
+              }}
+            >
               <IconButton
                 onClick={() => setDrawerOpen(true)}
+                aria-label="Open filters"
                 sx={{
                   display: { xs: "flex", md: "none" },
-                  bgcolor: "white",
                   border: "1px solid rgba(0,0,0,0.1)",
                   borderRadius: 2,
+                  bgcolor: "#F8FAFC",
                 }}
               >
-                <TuneIcon />
+                <TuneIcon fontSize="small" />
               </IconButton>
-            </Badge>
+
+              <FormControl size="small" sx={{ minWidth: { xs: "100%", sm: 200 } }}>
+                <Select
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value)}
+                  displayEmpty
+                  sx={{
+                    borderRadius: 2,
+                    bgcolor: "#F8FAFC",
+                    fontSize: "0.875rem",
+                    fontWeight: 500,
+                  }}
+                >
+                  {sortOptions.map((opt) => (
+                    <MenuItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
           </Box>
 
-          <Box display="flex" alignItems="center" gap={2}>
-            <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: "nowrap" }}>
-              {filtered.length} products found
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 1,
+              mt: 2,
+              pt: 2,
+              borderTop: "1px solid rgba(0,0,0,0.06)",
+            }}
+          >
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              <Box component="span" sx={{ fontWeight: 700, color: "text.primary" }}>
+                {filtered.length}
+              </Box>{" "}
+              {filtered.length === 1 ? "product" : "products"} found
             </Typography>
-            <FormControl size="small" sx={{ minWidth: 180 }}>
-              <Select
-                value={sort}
-                onChange={(e) => setSort(e.target.value)}
-                sx={{ bgcolor: "white", borderRadius: 2 }}
+
+            {activeFilters > 0 && (
+              <Button
+                size="small"
+                onClick={clearAllFilters}
+                sx={{ fontSize: "0.75rem", textTransform: "none" }}
               >
-                {sortOptions.map((opt) => (
-                  <MenuItem key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                Clear filters
+              </Button>
+            )}
           </Box>
-        </Box>
 
-        {/* Active filter chips */}
-        {(selectedCategory !== "all" || search) && (
-          <Box display="flex" gap={1} mb={3} flexWrap="wrap" alignItems="center">
-            <Typography variant="caption" color="text.secondary" fontWeight={600}>
-              Active filters:
-            </Typography>
-            {selectedCategory !== "all" && (
-              <Chip
-                label={categories.find((c) => c.slug === selectedCategory)?.name}
-                onDelete={() => handleCategoryChange("all")}
-                size="small"
-                color="primary"
-                variant="outlined"
-              />
-            )}
-            {search && (
-              <Chip
-                label={`"${search}"`}
-                onDelete={() => setSearch("")}
-                size="small"
-                color="primary"
-                variant="outlined"
-              />
-            )}
-          </Box>
-        )}
+          {(selectedCategory !== "all" || search) && (
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 1,
+                mt: 1.5,
+                alignItems: "center",
+              }}
+            >
+              {selectedCategory !== "all" && (
+                <Chip
+                  label={
+                    categories.find((c) => c.slug === selectedCategory)?.name
+                  }
+                  onDelete={() => handleCategoryChange("all")}
+                  size="small"
+                  color="primary"
+                  variant="outlined"
+                />
+              )}
+              {search && (
+                <Chip
+                  label={`Search: "${search}"`}
+                  onDelete={() => {
+                    setSearch("");
+                    setPage(1);
+                  }}
+                  size="small"
+                  color="primary"
+                  variant="outlined"
+                />
+              )}
+            </Box>
+          )}
+        </Paper>
 
         <Grid container spacing={3}>
           {/* Desktop sidebar */}
-          <Grid size={{ xs: 12, md: 3, lg: 2.5 }} sx={{ display: { xs: "none", md: "block" } }}>
-            <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3, border: "1px solid rgba(0,0,0,0.06)", position: "sticky", top: 90 }}>
-              <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                <Typography variant="subtitle1" fontWeight={700}>
+          <Grid
+            size={{ xs: 12, md: 3, lg: 2.5 }}
+            sx={{ display: { xs: "none", md: "block" } }}
+          >
+            <Paper
+              elevation={0}
+              sx={{
+                p: 2.5,
+                borderRadius: 3,
+                border: "1px solid rgba(0,0,0,0.06)",
+                position: "sticky",
+                top: 90,
+                bgcolor: "white",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  mb: 2,
+                }}
+              >
+                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
                   Filters
                 </Typography>
                 {activeFilters > 0 && (
                   <Button
                     size="small"
-                    onClick={() => { setSelectedCategory("all"); setSearch(""); }}
-                    sx={{ fontSize: "0.75rem", py: 0.5 }}
+                    onClick={clearAllFilters}
+                    sx={{ fontSize: "0.75rem", py: 0.5, textTransform: "none" }}
                   >
                     Clear all
                   </Button>
@@ -336,15 +505,18 @@ function ProductsContent() {
           {/* Products grid */}
           <Grid size={{ xs: 12, md: 9, lg: 9.5 }}>
             {paginated.length === 0 ? (
-              <Box textAlign="center" py={8}>
-                <Typography variant="h5" color="text.secondary" mb={1}>
+              <Box sx={{ textAlign: "center", py: 8 }}>
+                <Typography
+                  variant="h5"
+                  sx={{ color: "text.secondary", mb: 1 }}
+                >
                   No products found
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Try adjusting your search or filters
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  Try adjusting your search or category filter
                 </Typography>
-                <Button onClick={() => { setSearch(""); setSelectedCategory("all"); }} sx={{ mt: 2 }}>
-                  Clear Filters
+                <Button onClick={clearAllFilters} sx={{ mt: 2 }}>
+                  Clear filters
                 </Button>
               </Box>
             ) : (
@@ -367,11 +539,20 @@ function ProductsContent() {
             )}
 
             {totalPages > 1 && (
-              <Box display="flex" justifyContent="center" mt={5}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: 5,
+                }}
+              >
                 <Pagination
                   count={totalPages}
                   page={page}
-                  onChange={(_, v) => { setPage(v); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  onChange={(_, v) => {
+                    setPage(v);
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
                   color="primary"
                   shape="rounded"
                   sx={{
@@ -392,13 +573,24 @@ function ProductsContent() {
         anchor="left"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        PaperProps={{ sx: { width: "min(300px, 85vw)", p: 3 } }}
+        slotProps={{ paper: { sx: { width: "min(300px, 85vw)", p: 3 } } }}
       >
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-          <Typography variant="h6" fontWeight={700}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 3,
+          }}
+        >
+          <Typography variant="h6" sx={{ fontWeight: 700 }}>
             Filters
           </Typography>
-          <IconButton onClick={() => setDrawerOpen(false)} size="small">
+          <IconButton
+            onClick={() => setDrawerOpen(false)}
+            size="small"
+            aria-label="Close filters"
+          >
             <CloseIcon />
           </IconButton>
         </Box>
@@ -410,7 +602,20 @@ function ProductsContent() {
 
 export default function ProductsPage() {
   return (
-    <Suspense fallback={<Box sx={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}><Typography>Loading...</Typography></Box>}>
+    <Suspense
+      fallback={
+        <Box
+          sx={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography>Loading...</Typography>
+        </Box>
+      }
+    >
       <ProductsContent />
     </Suspense>
   );
