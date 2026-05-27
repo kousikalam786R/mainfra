@@ -1,36 +1,128 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MA INFRA Portable Cabin — Portable Cabin & Modular Infrastructure Website
 
-## Getting Started
+A modern, fully responsive industrial/business website built with Next.js 16, Material UI v9, and Framer Motion.
 
-First, run the development server:
+## 🌐 Live Dev Server
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 (App Router) |
+| UI Library | Material UI (MUI) v9 |
+| Animation | Framer Motion |
+| Language | TypeScript |
+| Styling | MUI Emotion CSS-in-JS |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Project Structure
 
-## Learn More
+```
+src/
+├── app/                      # Next.js App Router pages
+│   ├── layout.tsx            # Root layout with Navbar & Footer
+│   ├── page.tsx              # Home page
+│   ├── about/page.tsx        # About page
+│   ├── contact/page.tsx      # Contact page
+│   ├── gallery/page.tsx      # Gallery page
+│   └── products/
+│       ├── page.tsx          # Product listing page
+│       └── [slug]/page.tsx   # Product detail page
+│
+├── components/
+│   ├── common/               # Reusable components
+│   │   ├── SectionHeader.tsx
+│   │   ├── ThemeRegistry.tsx
+│   │   └── WhatsAppButton.tsx
+│   ├── layout/               # Layout components
+│   │   ├── Navbar.tsx        # Sticky navbar with mega menu
+│   │   └── Footer.tsx        # Modern footer
+│   ├── cards/
+│   │   └── ProductCard.tsx   # Reusable product card
+│   └── sections/             # Home page sections
+│       ├── HeroSection.tsx
+│       ├── CategoriesSection.tsx
+│       ├── FeaturedProducts.tsx
+│       ├── WhyChooseUs.tsx
+│       ├── StatsSection.tsx
+│       ├── IndustriesSection.tsx
+│       ├── TestimonialsSection.tsx
+│       └── CTASection.tsx
+│
+├── data/
+│   └── products.ts           # Mock product/category data
+│
+└── styles/
+    └── theme.ts              # MUI custom theme
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 📄 Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Page | Route | Description |
+|------|-------|-------------|
+| Home | `/` | Hero, categories, featured products, why us, stats, industries, testimonials, CTA |
+| Products | `/products` | Filterable product grid with search |
+| Product Detail | `/products/[slug]` | Image gallery, specs, inquiry form |
+| About | `/about` | Company story, mission, process, team |
+| Gallery | `/gallery` | Masonry gallery with category filters + lightbox |
+| Contact | `/contact` | Inquiry form, office locations, WhatsApp |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🎨 Design System
 
-## Deploy on Vercel
+- **Primary Color**: `#1565C0` (Industrial Blue)
+- **Secondary Color**: `#F57C00` (Industrial Orange)
+- **Font**: Inter (Google Fonts)
+- **Background**: `#F8FAFC` (Light grey)
+- **Border Radius**: 12px (theme default)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🏃 Getting Started
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+## 📦 Key Dependencies
+
+```json
+{
+  "next": "^16.2.6",
+  "@mui/material": "^9.0.1",
+  "@mui/icons-material": "^9.x",
+  "@emotion/react": "^11.x",
+  "@emotion/styled": "^11.x",
+  "framer-motion": "^11.x",
+  "react-intersection-observer": "^9.x"
+}
+```
+
+## 🔮 Future Backend Integration
+
+The project is architecture-ready for backend integration:
+
+- All data lives in `src/data/products.ts` — ready for API replacement
+- Dynamic routes (`/products/[slug]`) designed for `getStaticPaths` + `getStaticProps` or Server Components
+- Contact forms have `onSubmit` handlers — ready for API integration
+- Search/filter logic can be moved server-side with minimal changes
+
+## 📱 Responsive Breakpoints
+
+| Breakpoint | Screen |
+|-----------|--------|
+| `xs` | 0px+ |
+| `sm` | 600px+ |
+| `md` | 900px+ |
+| `lg` | 1200px+ |
+| `xl` | 1536px+ |
