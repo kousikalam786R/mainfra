@@ -11,7 +11,6 @@ import {
   IconButton,
   Grid,
 } from "@mui/material";
-
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -22,7 +21,8 @@ import SectionHeader from "@/components/common/SectionHeader";
 export default function TestimonialsSection() {
   const [active, setActive] = useState(0);
 
-  const prev = () => setActive((a) => (a - 1 + testimonials.length) % testimonials.length);
+  const prev = () =>
+    setActive((a) => (a - 1 + testimonials.length) % testimonials.length);
   const next = () => setActive((a) => (a + 1) % testimonials.length);
 
   return (
@@ -34,7 +34,6 @@ export default function TestimonialsSection() {
         overflow: "hidden",
       }}
     >
-      {/* Background decoration */}
       <Box
         sx={{
           position: "absolute",
@@ -45,7 +44,8 @@ export default function TestimonialsSection() {
           maxWidth: 600,
           height: "80%",
           borderRadius: "50%",
-          background: "radial-gradient(ellipse, rgba(21,101,192,0.04) 0%, transparent 70%)",
+          background:
+            "radial-gradient(ellipse, rgba(21,101,192,0.04) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -58,7 +58,6 @@ export default function TestimonialsSection() {
           subtitle="Join 800+ satisfied clients across India who trust MA INFRA Portable Cabin for their portable structure needs."
         />
 
-        {/* Desktop grid */}
         <Box sx={{ display: { xs: "none", md: "block" } }}>
           <Grid container spacing={3}>
             {testimonials.map((t, index) => (
@@ -75,6 +74,8 @@ export default function TestimonialsSection() {
                     sx={{
                       p: 3,
                       height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
                       border: "1px solid rgba(0,0,0,0.06)",
                       borderRadius: 3,
                       position: "relative",
@@ -99,36 +100,51 @@ export default function TestimonialsSection() {
                     <Rating value={t.rating} size="small" readOnly sx={{ mb: 2 }} />
                     <Typography
                       variant="body2"
-                      color="text.secondary"
-                      lineHeight={1.75}
-                      mb={3}
                       sx={{
+                        color: "text.secondary",
+                        lineHeight: 1.75,
+                        mb: 3,
                         display: "-webkit-box",
                         WebkitLineClamp: 5,
                         WebkitBoxOrient: "vertical",
                         overflow: "hidden",
                       }}
                     >
-                      "{t.review}"
+                      &ldquo;{t.review}&rdquo;
                     </Typography>
-                    <Box display="flex" alignItems="center" gap={1.5} mt="auto">
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1.5,
+                        mt: "auto",
+                      }}
+                    >
                       <Avatar
                         src={t.avatar}
                         alt={t.name}
                         sx={{ width: 44, height: 44 }}
                       />
                       <Box>
-                        <Typography variant="subtitle2" fontWeight={700}>
+                        <Typography
+                          variant="subtitle2"
+                          sx={{ fontWeight: 700 }}
+                        >
                           {t.name}
                         </Typography>
-                        <Typography variant="caption" color="text.secondary">
+                        <Typography
+                          variant="caption"
+                          sx={{ color: "text.secondary" }}
+                        >
                           {t.designation}
                         </Typography>
                         <Typography
                           variant="caption"
-                          display="block"
-                          color="primary"
-                          fontWeight={600}
+                          sx={{
+                            display: "block",
+                            color: "primary.main",
+                            fontWeight: 600,
+                          }}
                         >
                           {t.company}
                         </Typography>
@@ -141,7 +157,6 @@ export default function TestimonialsSection() {
           </Grid>
         </Box>
 
-        {/* Mobile carousel */}
         <Box sx={{ display: { xs: "block", md: "none" } }}>
           <AnimatePresence mode="wait">
             <motion.div
@@ -159,23 +174,34 @@ export default function TestimonialsSection() {
                   borderRadius: 3,
                 }}
               >
-                <Rating value={testimonials[active].rating} size="small" readOnly sx={{ mb: 1.5 }} />
+                <Rating
+                  value={testimonials[active].rating}
+                  size="small"
+                  readOnly
+                  sx={{ mb: 1.5 }}
+                />
                 <Typography
                   variant="body2"
-                  color="text.secondary"
-                  lineHeight={1.75}
-                  mb={2.5}
+                  sx={{
+                    color: "text.secondary",
+                    lineHeight: 1.75,
+                    mb: 2.5,
+                  }}
                 >
-                  "{testimonials[active].review}"
+                  &ldquo;{testimonials[active].review}&rdquo;
                 </Typography>
-                <Box display="flex" alignItems="center" gap={1.5}>
-                  <Avatar src={testimonials[active].avatar} sx={{ width: 44, height: 44 }} />
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                  <Avatar
+                    src={testimonials[active].avatar}
+                    sx={{ width: 44, height: 44 }}
+                  />
                   <Box>
-                    <Typography variant="subtitle2" fontWeight={700}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
                       {testimonials[active].name}
                     </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {testimonials[active].designation} · {testimonials[active].company}
+                    <Typography variant="caption" sx={{ color: "text.secondary" }}>
+                      {testimonials[active].designation} ·{" "}
+                      {testimonials[active].company}
                     </Typography>
                   </Box>
                 </Box>
@@ -183,14 +209,30 @@ export default function TestimonialsSection() {
             </motion.div>
           </AnimatePresence>
 
-          <Box display="flex" justifyContent="center" gap={1} mt={2.5} alignItems="center">
-            <IconButton size="small" onClick={prev}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              gap: 1,
+              mt: 2.5,
+              alignItems: "center",
+            }}
+          >
+            <IconButton size="small" onClick={prev} aria-label="Previous testimonial">
               <ArrowBackIosNewIcon fontSize="small" />
             </IconButton>
             {testimonials.map((_, i) => (
               <Box
                 key={i}
                 onClick={() => setActive(i)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setActive(i);
+                  }
+                }}
                 sx={{
                   width: i === active ? 20 : 8,
                   height: 8,
@@ -201,7 +243,7 @@ export default function TestimonialsSection() {
                 }}
               />
             ))}
-            <IconButton size="small" onClick={next}>
+            <IconButton size="small" onClick={next} aria-label="Next testimonial">
               <ArrowForwardIosIcon fontSize="small" />
             </IconButton>
           </Box>

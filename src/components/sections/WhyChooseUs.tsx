@@ -164,9 +164,11 @@ export default function WhyChooseUs() {
                   </Box>
                   <Typography
                     variant="h6"
-                    fontWeight={700}
-                    color="white"
-                    mb={1.25}
+                    sx={{
+                      fontWeight: 700,
+                      color: "white",
+                      mb: 1.25,
+                    }}
                   >
                     {feature.title}
                   </Typography>

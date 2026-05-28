@@ -11,7 +11,6 @@ import {
   TextField,
   Grid,
 } from "@mui/material";
-
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -19,16 +18,27 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { company } from "@/data/company";
 
+const fieldSx = {
+  "& .MuiOutlinedInput-root": {
+    bgcolor: "rgba(255,255,255,0.06)",
+    color: "white",
+    borderRadius: 2,
+    "& fieldset": { borderColor: "rgba(255,255,255,0.15)" },
+    "&:hover fieldset": { borderColor: "rgba(255,255,255,0.3)" },
+    "&.Mui-focused fieldset": { borderColor: "#F57C00" },
+  },
+  "& .MuiInputLabel-root": {
+    color: "rgba(255,255,255,0.55)",
+    "&.Mui-focused": { color: "#FF9800" },
+  },
+  "& input::placeholder": { color: "rgba(255,255,255,0.35)" },
+};
+
 export default function CTASection() {
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
 
   return (
-    <Box
-      sx={{
-        py: { xs: 8, md: 10 },
-        bgcolor: "white",
-      }}
-    >
+    <Box sx={{ py: { xs: 8, md: 10 }, bgcolor: "white" }}>
       <div ref={ref} />
       <Container maxWidth="xl">
         <motion.div
@@ -45,7 +55,6 @@ export default function CTASection() {
               background: "linear-gradient(135deg, #0A1628 0%, #0D2244 60%, #1565C0 100%)",
             }}
           >
-            {/* Decorative blobs */}
             <Box
               sx={{
                 position: "absolute",
@@ -73,9 +82,11 @@ export default function CTASection() {
               }}
             />
 
-            <Grid container alignItems="center">
-              {/* Content side */}
-              <Grid size={{ xs: 12, md: 6 }} sx={{ p: { xs: 4, md: 6, lg: 8 }, position: "relative" }}>
+            <Grid container sx={{ alignItems: "stretch" }}>
+              <Grid
+                size={{ xs: 12, md: 6 }}
+                sx={{ p: { xs: 4, md: 6, lg: 8 }, position: "relative" }}
+              >
                 <Typography
                   variant="overline"
                   sx={{ color: "#FF9800", fontWeight: 700, letterSpacing: 2 }}
@@ -84,20 +95,38 @@ export default function CTASection() {
                 </Typography>
                 <Typography
                   variant="h2"
-                  color="white"
-                  sx={{ mt: 1.5, mb: 2 }}
+                  sx={{
+                    color: "white",
+                    mt: 1.5,
+                    mb: 2,
+                    fontSize: { xs: "1.75rem", md: "2.25rem" },
+                    lineHeight: 1.2,
+                  }}
                 >
                   Get Your Free Quote Today
                 </Typography>
                 <Typography
                   variant="body1"
-                  sx={{ color: "rgba(255,255,255,0.7)", mb: 4, maxWidth: 440 }}
+                  sx={{
+                    color: "rgba(255,255,255,0.8)",
+                    mb: 4,
+                    maxWidth: 440,
+                    lineHeight: 1.75,
+                    fontSize: { xs: "0.9375rem", md: "1rem" },
+                  }}
                 >
-                  Tell us your requirements and our expert team will respond with a
-                  detailed quotation within 2 hours. No obligation, completely free.
+                  Share your requirements and our team will respond with a detailed
+                  quotation within 2 hours. Free consultation, no obligation.
                 </Typography>
 
-                <Box display="flex" gap={2} flexWrap="wrap" mb={4}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    flexWrap: "wrap",
+                    mb: 4,
+                  }}
+                >
                   <Button
                     component={Link}
                     href="/contact"
@@ -136,43 +165,65 @@ export default function CTASection() {
                   </Button>
                 </Box>
 
-                <Box display="flex" gap={3} flexWrap="wrap">
-                  <Box display="flex" gap={1} alignItems="center">
+                <Box sx={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
+                  <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
                     <PhoneIcon sx={{ color: "#FF9800", fontSize: 18 }} />
-                    <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.7)" }}>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "rgba(255,255,255,0.8)" }}
+                    >
                       {company.phone}
                     </Typography>
                   </Box>
-                  <Box display="flex" gap={1} alignItems="center">
+                  <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
                     <EmailIcon sx={{ color: "#FF9800", fontSize: 18 }} />
-                    <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.7)" }}>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "rgba(255,255,255,0.8)" }}
+                    >
                       {company.email}
                     </Typography>
                   </Box>
                 </Box>
               </Grid>
 
-              {/* Quick form side */}
               <Grid
                 size={{ xs: 12, md: 6 }}
                 sx={{
                   bgcolor: "rgba(255,255,255,0.04)",
                   backdropFilter: "blur(10px)",
                   borderLeft: { md: "1px solid rgba(255,255,255,0.08)" },
-                  borderTop: { xs: "1px solid rgba(255,255,255,0.08)", md: "none" },
+                  borderTop: {
+                    xs: "1px solid rgba(255,255,255,0.08)",
+                    md: "none",
+                  },
                   p: { xs: 4, md: 6, lg: 8 },
                   position: "relative",
                 }}
               >
-                <Typography variant="h5" color="white" fontWeight={700} mb={3}>
+                <Typography
+                  variant="h5"
+                  sx={{ color: "white", fontWeight: 700, mb: 3 }}
+                >
                   Quick Inquiry Form
                 </Typography>
 
-                <Box display="flex" flexDirection="column" gap={2.5}>
+                <Box
+                  component="form"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2.5,
+                  }}
+                  onSubmit={(e) => e.preventDefault()}
+                >
                   {[
-                    { label: "Your Name", placeholder: "Rajesh Kumar" },
+                    { label: "Your Name", placeholder: "Your full name" },
                     { label: "Phone Number", placeholder: company.phone },
-                    { label: "Company / Organization", placeholder: "Construction Pvt. Ltd." },
+                    {
+                      label: "Company / Organization",
+                      placeholder: "Company name (optional)",
+                    },
                   ].map((field) => (
                     <TextField
                       key={field.label}
@@ -180,55 +231,42 @@ export default function CTASection() {
                       placeholder={field.placeholder}
                       size="small"
                       fullWidth
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          bgcolor: "rgba(255,255,255,0.06)",
-                          color: "white",
-                          borderRadius: 2,
-                          "& fieldset": { borderColor: "rgba(255,255,255,0.15)" },
-                          "&:hover fieldset": { borderColor: "rgba(255,255,255,0.3)" },
-                          "&.Mui-focused fieldset": { borderColor: "#F57C00" },
-                        },
-                        "& .MuiInputLabel-root": {
-                          color: "rgba(255,255,255,0.5)",
-                          "&.Mui-focused": { color: "#FF9800" },
-                        },
-                        "& input::placeholder": { color: "rgba(255,255,255,0.3)" },
-                      }}
+                      sx={fieldSx}
                     />
                   ))}
                   <TextField
                     label="Product Interest"
-                    placeholder="e.g. 5 portable office cabins for construction site"
+                    placeholder="e.g. 5 portable office cabins for a construction site in Ranchi"
                     multiline
-                    rows={2}
+                    rows={3}
                     size="small"
                     fullWidth
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        bgcolor: "rgba(255,255,255,0.06)",
-                        color: "white",
-                        borderRadius: 2,
-                        "& fieldset": { borderColor: "rgba(255,255,255,0.15)" },
-                        "&:hover fieldset": { borderColor: "rgba(255,255,255,0.3)" },
-                        "&.Mui-focused fieldset": { borderColor: "#F57C00" },
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: "rgba(255,255,255,0.5)",
-                        "&.Mui-focused": { color: "#FF9800" },
-                      },
-                    }}
+                    sx={fieldSx}
                   />
                   <Button
+                    component={Link}
+                    href="/contact"
                     variant="contained"
                     color="secondary"
                     fullWidth
                     size="large"
-                    sx={{ borderRadius: 2, py: 1.5, fontWeight: 700 }}
+                    sx={{
+                      borderRadius: 2,
+                      py: 1.5,
+                      mt: 0.5,
+                      fontWeight: 700,
+                    }}
                   >
                     Send My Inquiry →
                   </Button>
-                  <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.4)", textAlign: "center" }}>
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color: "rgba(255,255,255,0.45)",
+                      textAlign: "center",
+                      lineHeight: 1.5,
+                    }}
+                  >
                     We respond within 2 hours · No spam guaranteed
                   </Typography>
                 </Box>

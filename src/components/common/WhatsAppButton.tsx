@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Fab, Tooltip, Typography, Paper, IconButton } from "@mui/material";
+import { Box, Fab, Typography, Paper, IconButton } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import CloseIcon from "@mui/icons-material/Close";
 import { motion, AnimatePresence } from "framer-motion";
-import { company, whatsappUrl as getWhatsAppUrl } from "@/data/company";
+import { whatsappUrl as getWhatsAppUrl } from "@/data/company";
 
 export default function WhatsAppButton() {
   const [open, setOpen] = useState(false);
@@ -44,7 +44,6 @@ export default function WhatsAppButton() {
                 boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
               }}
             >
-              {/* Header */}
               <Box
                 sx={{
                   bgcolor: "#25D366",
@@ -68,20 +67,37 @@ export default function WhatsAppButton() {
                 >
                   <WhatsAppIcon sx={{ color: "white" }} />
                 </Box>
-                <Box flex={1}>
-                  <Typography fontWeight={700} color="white" fontSize="0.875rem">
+                <Box sx={{ flex: 1, minWidth: 0 }}>
+                  <Typography
+                    sx={{
+                      fontWeight: 700,
+                      color: "white",
+                      fontSize: "0.875rem",
+                      lineHeight: 1.3,
+                    }}
+                  >
                     MA INFRA Support
                   </Typography>
-                  <Box display="flex" alignItems="center" gap={0.5}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 0.5,
+                    }}
+                  >
                     <Box
                       sx={{
                         width: 6,
                         height: 6,
                         borderRadius: "50%",
                         bgcolor: "#4AE54A",
+                        flexShrink: 0,
                       }}
                     />
-                    <Typography variant="caption" color="rgba(255,255,255,0.8)">
+                    <Typography
+                      variant="caption"
+                      sx={{ color: "rgba(255,255,255,0.8)" }}
+                    >
                       Online now
                     </Typography>
                   </Box>
@@ -89,13 +105,16 @@ export default function WhatsAppButton() {
                 <IconButton
                   size="small"
                   onClick={() => setOpen(false)}
-                  sx={{ color: "rgba(255,255,255,0.8)", "&:hover": { color: "white" } }}
+                  aria-label="Close chat"
+                  sx={{
+                    color: "rgba(255,255,255,0.8)",
+                    "&:hover": { color: "white" },
+                  }}
                 >
                   <CloseIcon fontSize="small" />
                 </IconButton>
               </Box>
 
-              {/* Chat bubble */}
               <Box sx={{ bgcolor: "#E5DDD5", p: 2 }}>
                 <Box
                   sx={{
@@ -106,16 +125,27 @@ export default function WhatsAppButton() {
                     boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
                   }}
                 >
-                  <Typography variant="body2" color="text.primary" lineHeight={1.5}>
-                    👋 Hi! Looking for portable cabins or modular offices? Chat with us for a free quote!
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "text.primary", lineHeight: 1.5 }}
+                  >
+                    👋 Hi! Looking for portable cabins or modular offices? Chat
+                    with us for a free quote!
                   </Typography>
-                  <Typography variant="caption" color="text.secondary" display="block" textAlign="right" mt={0.5}>
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color: "text.secondary",
+                      display: "block",
+                      textAlign: "right",
+                      mt: 0.5,
+                    }}
+                  >
                     Just now
                   </Typography>
                 </Box>
               </Box>
 
-              {/* CTA */}
               <Box
                 sx={{
                   p: 2,
@@ -153,12 +183,10 @@ export default function WhatsAppButton() {
         )}
       </AnimatePresence>
 
-      <motion.div
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
+      <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
         <Fab
           onClick={() => setOpen(!open)}
+          aria-label={open ? "Close WhatsApp chat" : "Open WhatsApp chat"}
           sx={{
             bgcolor: "#25D366",
             color: "white",
@@ -220,7 +248,10 @@ export default function WhatsAppButton() {
               boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
             }}
           >
-            <Typography variant="caption" fontWeight={600} color="text.primary">
+            <Typography
+              variant="caption"
+              sx={{ fontWeight: 600, color: "text.primary" }}
+            >
               Chat with us
             </Typography>
           </Paper>

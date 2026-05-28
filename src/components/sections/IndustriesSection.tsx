@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Box, Container, Typography, Card, Grid } from "@mui/material";
-
 import { motion } from "framer-motion";
 import { industries } from "@/data/products";
 import SectionHeader from "@/components/common/SectionHeader";
@@ -38,6 +37,7 @@ export default function IndustriesSection() {
                     borderRadius: 3,
                     cursor: "default",
                     transition: "all 0.3s ease",
+                    height: "100%",
                     "&:hover": {
                       borderColor: "#1565C0",
                       bgcolor: "#EFF6FF",
@@ -46,20 +46,28 @@ export default function IndustriesSection() {
                     },
                   }}
                 >
-                  <Typography
-                    sx={{ fontSize: "2.5rem", lineHeight: 1, mb: 1.5 }}
-                  >
+                  <Typography sx={{ fontSize: "2.5rem", lineHeight: 1, mb: 1.5 }}>
                     {industry.icon}
                   </Typography>
                   <Typography
                     variant="subtitle2"
-                    fontWeight={700}
-                    color="text.primary"
-                    mb={0.75}
+                    sx={{
+                      fontWeight: 700,
+                      color: "text.primary",
+                      mb: 0.75,
+                      lineHeight: 1.3,
+                    }}
                   >
                     {industry.name}
                   </Typography>
-                  <Typography variant="caption" color="text.secondary" lineHeight={1.5} display="block">
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color: "text.secondary",
+                      lineHeight: 1.5,
+                      display: "block",
+                    }}
+                  >
                     {industry.description}
                   </Typography>
                 </Card>

@@ -24,7 +24,11 @@ export default function SectionHeader({
 }: SectionHeaderProps) {
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
 
-  const titleParts = highlight ? title.split(highlight) : [title];
+  const highlightInTitle = Boolean(
+    highlight && title.toLowerCase().includes(highlight.toLowerCase())
+  );
+  const titleParts =
+    highlight && highlightInTitle ? title.split(highlight) : [title, ""];
 
   return (
     <motion.div
@@ -33,7 +37,12 @@ export default function SectionHeader({
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <Box textAlign={centered ? "center" : "left"} mb={6}>
+      <Box
+        sx={{
+          textAlign: centered ? "center" : "left",
+          mb: { xs: 4, md: 5 },
+        }}
+      >
         {badge && (
           <Chip
             label={badge}
@@ -52,19 +61,32 @@ export default function SectionHeader({
         )}
         <Typography
           variant="h2"
+          component="div"
           sx={{
             color: light ? "white" : "text.primary",
             mb: subtitle ? 2 : 0,
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "baseline",
+            justifyContent: centered ? "center" : "flex-start",
+            columnGap: 1,
+            rowGap: 0.5,
+            fontWeight: 800,
+            fontSize: { xs: "1.75rem", sm: "2rem", md: "2.5rem" },
+            lineHeight: 1.2,
           }}
         >
           {highlight ? (
             <>
-              {titleParts[0]}
+              {titleParts[0]?.trim() ? (
+                <Box component="span">{titleParts[0].trim()}</Box>
+              ) : null}
               <Box
                 component="span"
                 sx={{
                   color: "secondary.main",
                   position: "relative",
+                  whiteSpace: "nowrap",
                   "&::after": {
                     content: '""',
                     position: "absolute",
@@ -80,7 +102,9 @@ export default function SectionHeader({
               >
                 {highlight}
               </Box>
-              {titleParts[1]}
+              {titleParts[1]?.trim() ? (
+                <Box component="span">{titleParts[1].trim()}</Box>
+              ) : null}
             </>
           ) : (
             title
@@ -90,10 +114,12 @@ export default function SectionHeader({
           <Typography
             variant="body1"
             sx={{
-              color: light ? "rgba(255,255,255,0.75)" : "text.secondary",
-              maxWidth: centered ? 640 : "100%",
+              color: light ? "rgba(255,255,255,0.8)" : "text.secondary",
+              maxWidth: centered ? 680 : "100%",
               mx: centered ? "auto" : 0,
-              fontSize: "1.05rem",
+              fontSize: { xs: "0.9375rem", md: "1.0625rem" },
+              lineHeight: 1.75,
+              px: centered ? { xs: 1, sm: 0 } : 0,
             }}
           >
             {subtitle}

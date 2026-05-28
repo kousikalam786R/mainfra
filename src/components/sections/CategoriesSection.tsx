@@ -2,8 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Box, Container, Typography, Card, Chip, Grid } from "@mui/material";
-
+import { Box, Container, Typography, Card, Chip, Grid, Button, Paper } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { motion } from "framer-motion";
 import { categories } from "@/data/products";
@@ -17,7 +16,7 @@ export default function CategoriesSection() {
           badge="What We Offer"
           title="Our Product"
           highlight="Categories"
-          subtitle="From quick-deploy security cabins to fully furnished container homes — we build modular structures for every need."
+          subtitle="From quick-deploy security cabins to fully furnished container homes — we design and deliver modular structures for construction sites, industries, and commercial projects across India."
         />
 
         <Grid container spacing={3}>
@@ -42,12 +41,8 @@ export default function CategoriesSection() {
                     borderRadius: 3,
                     cursor: "pointer",
                     "&:hover": {
-                      "& .cat-overlay": {
-                        opacity: 1,
-                      },
-                      "& .cat-image": {
-                        transform: "scale(1.07)",
-                      },
+                      "& .cat-overlay": { opacity: 1 },
+                      "& .cat-image": { transform: "scale(1.07)" },
                       "& .cat-arrow": {
                         transform: "translateX(4px)",
                         opacity: 1,
@@ -56,7 +51,6 @@ export default function CategoriesSection() {
                     },
                   }}
                 >
-                  {/* Background image */}
                   <Box
                     className="cat-image"
                     sx={{
@@ -68,8 +62,6 @@ export default function CategoriesSection() {
                       transition: "transform 0.5s ease",
                     }}
                   />
-
-                  {/* Dark overlay */}
                   <Box
                     sx={{
                       position: "absolute",
@@ -78,8 +70,6 @@ export default function CategoriesSection() {
                         "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 60%, transparent 100%)",
                     }}
                   />
-
-                  {/* Hover overlay */}
                   <Box
                     className="cat-overlay"
                     sx={{
@@ -90,8 +80,6 @@ export default function CategoriesSection() {
                       transition: "opacity 0.3s ease",
                     }}
                   />
-
-                  {/* Content */}
                   <Box
                     sx={{
                       position: "absolute",
@@ -115,22 +103,33 @@ export default function CategoriesSection() {
                       }}
                     />
                     <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="space-between"
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: 1,
+                      }}
                     >
-                      <Box>
+                      <Box sx={{ minWidth: 0 }}>
                         <Typography
                           variant="h6"
-                          fontWeight={700}
-                          lineHeight={1.2}
-                          sx={{ fontSize: "1rem" }}
+                          sx={{
+                            fontWeight: 700,
+                            lineHeight: 1.25,
+                            fontSize: "1rem",
+                            color: "white",
+                          }}
                         >
                           {cat.name}
                         </Typography>
                         <Typography
                           variant="caption"
-                          sx={{ color: "rgba(255,255,255,0.7)" }}
+                          sx={{
+                            color: "rgba(255,255,255,0.75)",
+                            lineHeight: 1.4,
+                            display: "block",
+                            mt: 0.25,
+                          }}
                         >
                           {cat.description}
                         </Typography>
@@ -148,7 +147,6 @@ export default function CategoriesSection() {
                           transition: "all 0.3s ease",
                           opacity: 0.6,
                           flexShrink: 0,
-                          ml: 1,
                         }}
                       >
                         <ArrowForwardIcon sx={{ fontSize: 16, color: "white" }} />
@@ -160,6 +158,49 @@ export default function CategoriesSection() {
             </Grid>
           ))}
         </Grid>
+
+        <Paper
+          elevation={0}
+          sx={{
+            mt: { xs: 4, md: 5 },
+            p: { xs: 2.5, md: 3 },
+            borderRadius: 3,
+            border: "1px solid rgba(0,0,0,0.06)",
+            bgcolor: "#F8FAFC",
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 2,
+          }}
+        >
+          <Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
+            <Typography sx={{ fontWeight: 700, mb: 0.5 }}>
+              Explore our full product range
+            </Typography>
+            <Typography variant="body2" sx={{ color: "text.secondary", lineHeight: 1.6 }}>
+              Browse all portable cabins, offices, storage units, and container solutions in one place.
+            </Typography>
+          </Box>
+          <Button
+            component={Link}
+            href="/products"
+            variant="contained"
+            color="primary"
+            size="large"
+            endIcon={<ArrowForwardIcon />}
+            sx={{
+              borderRadius: 2.5,
+              px: 3.5,
+              py: 1.35,
+              fontWeight: 600,
+              flexShrink: 0,
+              whiteSpace: "nowrap",
+            }}
+          >
+            View All Products
+          </Button>
+        </Paper>
       </Container>
     </Box>
   );

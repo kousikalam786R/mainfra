@@ -36,6 +36,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { motion, AnimatePresence } from "framer-motion";
 import { products } from "@/data/products";
 import ProductCard from "@/components/cards/ProductCard";
+import SectionHeader from "@/components/common/SectionHeader";
 import { company, whatsappUrl } from "@/data/company";
 
 const trustItems = [
@@ -837,61 +838,32 @@ export default function ProductDetailPage() {
         </Box>
 
         {related.length > 0 && (
-          <Box
-            component="section"
-            aria-labelledby="related-products-heading"
+          <Paper
+            elevation={0}
             sx={{
               mt: { xs: 6, md: 8 },
-              pt: { xs: 4, md: 5 },
-              borderTop: "1px solid rgba(0,0,0,0.08)",
+              p: { xs: 2, sm: 2.5, md: 3 },
+              borderRadius: 3,
+              border: "1px solid rgba(0,0,0,0.06)",
+              bgcolor: "white",
             }}
           >
             <Box
               sx={{
                 display: "flex",
-                flexDirection: { xs: "column", sm: "row" },
-                alignItems: { xs: "flex-start", sm: "flex-end" },
+                alignItems: { xs: "flex-start", sm: "center" },
                 justifyContent: "space-between",
-                gap: 2,
-                mb: 3,
+                gap: 1.5,
+                flexDirection: { xs: "column", sm: "row" },
+                mb: 2,
               }}
             >
-              <Box>
-                <Typography
-                  variant="overline"
-                  sx={{
-                    color: "primary.main",
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    display: "block",
-                    mb: 0.75,
-                  }}
-                >
-                  More to explore
-                </Typography>
-                <Typography
-                  id="related-products-heading"
-                  variant="h5"
-                  component="h2"
-                  sx={{
-                    fontWeight: 800,
-                    color: "text.primary",
-                    lineHeight: 1.2,
-                    fontSize: { xs: "1.25rem", md: "1.5rem" },
-                  }}
-                >
-                  Related{" "}
-                  <Box component="span" sx={{ color: "secondary.main" }}>
-                    products
-                  </Box>
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ color: "text.secondary", mt: 0.75, maxWidth: 480 }}
-                >
-                  More {product.category.toLowerCase()} solutions you may like
-                </Typography>
-              </Box>
+              <SectionHeader
+                badge="More to explore"
+                title="Related"
+                highlight="products"
+                subtitle="Other solutions from the same category"
+              />
               <Button
                 component={Link}
                 href={`/products?category=${product.categorySlug}`}
@@ -899,35 +871,24 @@ export default function ProductDetailPage() {
                 size="small"
                 sx={{
                   borderRadius: 2,
-                  fontWeight: 600,
-                  flexShrink: 0,
                   textTransform: "none",
+                  fontWeight: 600,
+                  alignSelf: { xs: "flex-start", sm: "center" },
+                  flexShrink: 0,
                 }}
               >
                 View all in {product.category}
               </Button>
             </Box>
 
-            <Box
-              sx={{
-                display: "grid",
-                gap: 3,
-                gridTemplateColumns: {
-                  xs: "1fr",
-                  sm:
-                    related.length === 1
-                      ? "minmax(0, 340px)"
-                      : "repeat(2, minmax(0, 1fr))",
-                  md: `repeat(${Math.min(related.length, 3)}, minmax(0, 1fr))`,
-                  lg: `repeat(${Math.min(related.length, 4)}, minmax(0, 1fr))`,
-                },
-              }}
-            >
+            <Grid container spacing={{ xs: 2, md: 2.5 }}>
               {related.map((p) => (
-                <ProductCard key={p.id} product={p} variant="compact" />
+                <Grid size={{ xs: 12, sm: 6, lg: 3 }} key={p.id}>
+                  <ProductCard product={p} />
+                </Grid>
               ))}
-            </Box>
-          </Box>
+            </Grid>
+          </Paper>
         )}
       </Container>
     </Box>

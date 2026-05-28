@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { Box, Container, Typography, Grid } from "@mui/material";
-
+import { Box, Container, Typography, Grid, Paper } from "@mui/material";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
@@ -19,47 +18,62 @@ export default function StatsSection() {
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
 
   return (
-    <div ref={ref}>
-    <Box
-      sx={{
-        py: { xs: 6, md: 8 },
-        background: "linear-gradient(135deg, #1565C0 0%, #1976D2 50%, #0D47A1 100%)",
-      }}
-    >
+    <Box ref={ref} sx={{ py: { xs: 6, md: 8 }, bgcolor: "#F1F5F9" }}>
       <Container maxWidth="xl">
-        <Grid container spacing={3}>
+        <Grid container spacing={2.5}>
           {stats.map((stat, i) => (
-            <Grid size={{ xs: 6, sm: 4, md: 2 }} key={i}>
+            <Grid size={{ xs: 6, sm: 4, md: 2 }} key={stat.label}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
               >
-                <Box textAlign="center" p={{ xs: 1, md: 2 }}>
-                  <Typography sx={{ fontSize: { xs: "1.8rem", md: "2rem" }, mb: 0.5 }}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: { xs: 2, md: 2.5 },
+                    textAlign: "center",
+                    borderRadius: 3,
+                    border: "1px solid rgba(0,0,0,0.06)",
+                    bgcolor: "white",
+                    height: "100%",
+                    transition: "box-shadow 0.25s ease",
+                    "&:hover": {
+                      boxShadow: "0 8px 24px rgba(21,101,192,0.1)",
+                    },
+                  }}
+                >
+                  <Typography sx={{ fontSize: { xs: "1.5rem", md: "1.75rem" }, mb: 0.75 }}>
                     {stat.icon}
                   </Typography>
                   <Typography
-                    variant="h3"
-                    fontWeight={800}
-                    color="white"
-                    sx={{ fontSize: { xs: "1.75rem", md: "2.25rem" }, lineHeight: 1.1, mb: 0.5 }}
+                    sx={{
+                      fontWeight: 800,
+                      color: "primary.main",
+                      fontSize: { xs: "1.35rem", md: "1.65rem" },
+                      lineHeight: 1.1,
+                      mb: 0.5,
+                    }}
                   >
                     {stat.value}
                   </Typography>
                   <Typography
-                    variant="body2"
-                    sx={{ color: "rgba(255,255,255,0.7)", fontWeight: 500 }}
+                    variant="caption"
+                    sx={{
+                      color: "text.secondary",
+                      fontWeight: 500,
+                      lineHeight: 1.4,
+                      display: "block",
+                    }}
                   >
                     {stat.label}
                   </Typography>
-                </Box>
+                </Paper>
               </motion.div>
             </Grid>
           ))}
         </Grid>
       </Container>
     </Box>
-    </div>
   );
 }

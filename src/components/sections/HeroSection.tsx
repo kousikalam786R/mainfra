@@ -119,7 +119,7 @@ export default function HeroSection() {
 
       {/* Content */}
       <Container maxWidth="xl" sx={{ position: "relative", zIndex: 2, py: { xs: 4, md: 5 } }}>
-        <Grid container spacing={4} alignItems="center">
+        <Grid container spacing={4} sx={{ alignItems: "center" }}>
           <Grid size={{ xs: 12, md: 7, lg: 6 }}>
             <AnimatePresence mode="wait">
               <motion.div
@@ -184,7 +184,14 @@ export default function HeroSection() {
                   {slide.description}
                 </Typography>
 
-                <Box display="flex" gap={2} flexWrap="wrap" sx={{ mb: { xs: 1, md: 0 } }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    flexWrap: "wrap",
+                    mb: { xs: 1, md: 0 },
+                  }}
+                >
                   <Button
                     component={Link}
                     href={slide.ctaHref}
@@ -227,9 +234,9 @@ export default function HeroSection() {
 
                 {/* Trust badges */}
                 <Box
-                  display="flex"
-                  flexWrap="wrap"
                   sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
                     mt: { xs: 5, md: 6 },
                     gap: { xs: 2, sm: 3 },
                     rowGap: { xs: 3, sm: 3.5 },
@@ -238,10 +245,10 @@ export default function HeroSection() {
                   {trustBadges.map((badge, i) => (
                     <Box
                       key={i}
-                      display="flex"
-                      alignItems="center"
-                      gap={1.25}
                       sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1.25,
                         bgcolor: "rgba(255,255,255,0.08)",
                         border: "1px solid rgba(255,255,255,0.12)",
                         borderRadius: 2,
@@ -255,8 +262,10 @@ export default function HeroSection() {
                       </Box>
                       <Typography
                         variant="caption"
-                        color="rgba(255,255,255,0.85)"
-                        fontWeight={500}
+                        sx={{
+                          color: "rgba(255,255,255,0.85)",
+                          fontWeight: 500,
+                        }}
                       >
                         {badge.label}
                       </Typography>
@@ -287,7 +296,7 @@ export default function HeroSection() {
                 <Typography variant="overline" sx={{ color: "rgba(255,255,255,0.5)", letterSpacing: 2 }}>
                   Our Numbers Speak
                 </Typography>
-                <Grid container spacing={2.5} mt={0.5}>
+                <Grid container spacing={2.5} sx={{ mt: 0.5 }}>
                   {[
                     { num: "2,500+", label: "Projects Done" },
                     { num: "800+", label: "Happy Clients" },
@@ -305,9 +314,11 @@ export default function HeroSection() {
                       >
                         <Typography
                           variant="h4"
-                          fontWeight={800}
-                          color="#FF9800"
-                          sx={{ lineHeight: 1.1 }}
+                          sx={{
+                            fontWeight: 800,
+                            color: "#FF9800",
+                            lineHeight: 1.1,
+                          }}
                         >
                           {stat.num}
                         </Typography>
@@ -328,9 +339,11 @@ export default function HeroSection() {
 
         {/* Slide indicators */}
         <Box
-          display="flex"
-          gap={1}
-          mt={{ xs: 4, md: 6 }}
+          sx={{
+            display: "flex",
+            gap: 1,
+            mt: { xs: 4, md: 6 },
+          }}
         >
           {slides.map((_, i) => (
             <Box
