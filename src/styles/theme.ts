@@ -128,19 +128,27 @@ const theme = createTheme({
             boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
           },
         },
-        containedPrimary: {
-          background: "linear-gradient(135deg, #1565C0 0%, #1976D2 100%)",
-          "&:hover": {
-            background: "linear-gradient(135deg, #0D47A1 0%, #1565C0 100%)",
-          },
-        },
-        containedSecondary: {
-          background: "linear-gradient(135deg, #F57C00 0%, #FF9800 100%)",
-          "&:hover": {
-            background: "linear-gradient(135deg, #E65100 0%, #F57C00 100%)",
-          },
-        },
       },
+      variants: [
+        {
+          props: { variant: "contained", color: "primary" },
+          style: {
+            background: "linear-gradient(135deg, #1565C0 0%, #1976D2 100%)",
+            "&:hover": {
+              background: "linear-gradient(135deg, #0D47A1 0%, #1565C0 100%)",
+            },
+          },
+        },
+        {
+          props: { variant: "contained", color: "secondary" },
+          style: {
+            background: "linear-gradient(135deg, #F57C00 0%, #FF9800 100%)",
+            "&:hover": {
+              background: "linear-gradient(135deg, #E65100 0%, #F57C00 100%)",
+            },
+          },
+        },
+      ],
     },
     MuiCard: {
       styleOverrides: {
