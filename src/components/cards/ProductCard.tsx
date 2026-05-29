@@ -28,6 +28,7 @@ export default function ProductCard({
 }: ProductCardProps) {
   const imageHeight = variant === "compact" ? 180 : 220;
 
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
