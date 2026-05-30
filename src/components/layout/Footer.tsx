@@ -24,6 +24,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SendIcon from "@mui/icons-material/Send";
 import { company } from "@/data/company";
+import Logo from "@/components/common/Logo";
 
 const footerLinks = {
   Products: [
@@ -116,46 +117,8 @@ export default function Footer() {
         >
           {/* Brand column */}
           <Grid size={{ xs: 12, lg: 4 }}>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1.5,
-                mb: 2,
-              }}
-            >
-              <Box
-                sx={{
-                  width: 44,
-                  height: 44,
-                  borderRadius: 2,
-                  background: "linear-gradient(135deg, #1565C0, #F57C00)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontWeight: 900,
-                  fontSize: "1.2rem",
-                  flexShrink: 0,
-                  color: "#fff",
-                }}
-              >
-                M
-              </Box>
-              <Box>
-                <Typography
-                  sx={{
-                    fontWeight: 800,
-                    fontSize: "1.15rem",
-                    lineHeight: 1.2,
-                    color: "#fff",
-                  }}
-                >
-                  MA INFRA
-                </Typography>
-                <Typography variant="caption" sx={{ color: "#94A3B8", display: "block" }}>
-                  Portable Cabin
-                </Typography>
-              </Box>
+            <Box sx={{ mb: 2 }}>
+              <Logo variant="footer" />
             </Box>
 
             <Typography

@@ -27,6 +27,10 @@ export const metadata: Metadata = {
     url: "https://mainfraportablecabin.com",
     siteName: "MA INFRA Portable Cabin",
   },
+  icons: {
+    icon: "/logo/ma-logo.png",
+    apple: "/logo/ma-logo.png",
+  },
 };
 
 export default function RootLayout({

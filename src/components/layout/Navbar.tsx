@@ -23,6 +23,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import PhoneIcon from "@mui/icons-material/Phone";
 import { company } from "@/data/company";
+import Logo from "@/components/common/Logo";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -117,59 +118,11 @@ export default function Navbar() {
           <Toolbar
             sx={{
               px: { xs: 0 },
-              minHeight: { xs: 64, md: 72 },
+              minHeight: { xs: 68, md: 76 },
               gap: 2,
             }}
           >
-            {/* Logo */}
-            <Box
-              component={Link}
-              href="/"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1.5,
-                textDecoration: "none",
-                flexShrink: 0,
-              }}
-            >
-              <Box
-                sx={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 2,
-                  background: "linear-gradient(135deg, #1565C0, #F57C00)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  fontWeight: 900,
-                  fontSize: "1.1rem",
-                  flexShrink: 0,
-                }}
-              >
-                M
-              </Box>
-              <Box>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontWeight: 800,
-                    color: "#0D47A1",
-                    lineHeight: 1,
-                    fontSize: "1.2rem",
-                  }}
-                >
-                  MA INFRA
-                </Typography>
-                <Typography
-                  variant="caption"
-                  sx={{ color: "#64748B", lineHeight: 1, display: "block" }}
-                >
-                  Portable Cabin
-                </Typography>
-              </Box>
-            </Box>
+            <Logo variant="navbar" />
 
             {/* Desktop Nav */}
             <Box
@@ -250,9 +203,7 @@ export default function Navbar() {
             alignItems: "center",
           }}
         >
-          <Typography sx={{ fontWeight: 700, color: "primary.main" }}>
-            MA INFRA
-          </Typography>
+          <Logo variant="drawer" href="/" showTagline />
           <IconButton onClick={() => setMobileOpen(false)} aria-label="Close menu">
             <CloseIcon />
           </IconButton>

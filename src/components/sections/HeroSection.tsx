@@ -28,7 +28,7 @@ const slides = [
     subtitle: "Built for Every Site",
     description:
       "Premium pre-engineered portable cabins for construction sites, corporate campuses, and industrial facilities. Delivered pan-India within days.",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80",
+    image: "/hero/hero1.jpeg",
     cta: "Explore Cabins",
     ctaHref: "/products?category=portable-office-cabin",
   },
@@ -40,7 +40,7 @@ const slides = [
     subtitle: "Live Differently",
     description:
       "Earthquake-resistant, energy-efficient container homes with premium interiors. From compact studios to full 3BHK configurations.",
-    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1600&q=80",
+    image: "/hero/hero2.jpeg",
     cta: "View Container Houses",
     ctaHref: "/products?category=container-house",
   },
@@ -52,7 +52,7 @@ const slides = [
     subtitle: "Guard in Comfort",
     description:
       "360° visibility, heavy-gauge steel construction, all-weather protection for 24/7 guard duty at factories, campuses, and residential complexes.",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&q=80",
+    image: "/hero/hero4.jpeg",
     cta: "Shop Security Cabins",
     ctaHref: "/products?category=security-cabin",
   },
