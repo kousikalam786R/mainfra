@@ -12,8 +12,7 @@ export const company = {
   phoneTel: "+917461975741",
   whatsapp: "917461975741",
 
-  // As printed on card (use gmail if @com was a print/OCR typo)
-  email: "inframapc@gmail.com",
+  email: "business@mainfrapc.com",
 
   address: {
     line1: "At-Khata No-14, Plot No-347",
@@ -28,6 +27,14 @@ export const company = {
     "At-Khata No-14, Plot No-347, Ranchi Patna Road, Ormanjhi, Ranchi – 835219, Jharkhand, India",
 
   hours: "Mon–Sat: 9:00 AM – 6:00 PM IST",
+
+  gst: {
+    form: "Government of India Form GST REG-06 [See Rule 10(1)]",
+    certificate: "Registration Certificate",
+    registrationNumber: "20ACHFM4014F1ZV",
+  },
+
+  certifications: ["GST Registered"] as const,
 
   features: [
     "Strong Structure",

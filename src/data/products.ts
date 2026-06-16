@@ -90,10 +90,10 @@ export const products: Product[] = [
     shortDescription:
       "Premium office space with insulated walls, electrical fittings, and climate-ready interiors.",
     images: [
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80",
-      "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80",
-      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80",
+      "/product/officeCabin.jpeg",
+      "/product/portableOffice.jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.32.48%20PM.jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.35.48%20PM.jpeg",
     ],
     features: [
       "Pre-engineered steel frame structure",
@@ -137,10 +137,10 @@ export const products: Product[] = [
     shortDescription:
       "Compact and weatherproof guard cabin with all-round visibility and durable steel construction.",
     images: [
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
-      "https://images.unsplash.com/photo-1611689102192-1f6f22159fbb?w=800&q=80",
-      "https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?w=800&q=80",
+      "/product/securetyCabin.jpeg",
+      "/product/toilet.jpeg",
+      "/product/portableOffice.jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.50.03%20PM.jpeg",
     ],
     features: [
       "360° visibility with large windows",
@@ -182,10 +182,10 @@ export const products: Product[] = [
     shortDescription:
       "Modern 2 BHK container home with full amenities – earthquake-resistant and energy-efficient.",
     images: [
-      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80",
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80",
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
-      "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&q=80",
+      "/product/farmhouse.jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.46.05%20PM.jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.35.48%20PM.jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.48.13%20PM.jpeg",
     ],
     features: [
       "ISO-grade container base structure",
@@ -228,10 +228,10 @@ export const products: Product[] = [
     shortDescription:
       "Interconnectable modular office units ideal for corporate sites and project offices.",
     images: [
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80",
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80",
-      "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80",
+      "/product/portableOffice.jpeg",
+      "/product/officeCabin.jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.49.42%20PM.jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.50.03%20PM.jpeg",
     ],
     features: [
       "Modular interconnectable design",
@@ -273,10 +273,8 @@ export const products: Product[] = [
     shortDescription:
       "Hygienic, self-contained portable toilet unit for construction sites and events.",
     images: [
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
-      "https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?w=800&q=80",
-      "https://images.unsplash.com/photo-1611689102192-1f6f22159fbb?w=800&q=80",
-      "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&q=80",
+      "/product/portabletoilet.jpeg",
+      "/product/toilet.jpeg",
     ],
     features: [
       "HDPE anti-bacterial body",
@@ -318,10 +316,10 @@ export const products: Product[] = [
     shortDescription:
       "Weather-resistant 20ft storage unit with heavy-duty locking for industrial & site use.",
     images: [
-      "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80",
-      "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=800&q=80",
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
+      "/product/securetyCabin.jpeg",
+      "/product/portableOffice.jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.50.03%20PM.jpeg",
+      "/product/officeCabin.jpeg",
     ],
     features: [
       "Heavy-gauge corrugated steel body",
@@ -363,10 +361,10 @@ export const products: Product[] = [
     shortDescription:
       "Cost-effective site office with insulated roofing and standard electrical provisions.",
     images: [
-      "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80",
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80",
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80",
+      "/product/officeCabin.jpeg",
+      "/product/portableOffice.jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.27.31%20PM%20(1).jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.43.15%20PM.jpeg",
     ],
     features: [
       "Galvanized steel primary structure",
@@ -408,10 +406,10 @@ export const products: Product[] = [
     shortDescription:
       "Designer container studio with premium interiors, ideal for resorts and urban living.",
     images: [
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80",
-      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80",
-      "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&q=80",
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
+      "/product/farmhouse.jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.46.05%20PM.jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.48.13%20PM.jpeg",
+      "/product/WhatsApp%20Image%202026-05-29%20at%2010.35.48%20PM.jpeg",
     ],
     features: [
       "Designer kitchen with granite countertop",
@@ -501,121 +499,121 @@ export const industries = [
     name: "Construction",
     icon: "🏗️",
     description: "Site offices, labor housing, and storage units",
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80",
+    image: "/product/officeCabin.jpeg",
   },
   {
     name: "Healthcare",
     icon: "🏥",
     description: "Temporary clinics, isolation wards, and medical camps",
-    image: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=400&q=80",
+    image: "/product/portableOffice.jpeg",
   },
   {
     name: "Education",
     icon: "🎓",
     description: "Modular classrooms and exam centers",
-    image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&q=80",
+    image: "/product/WhatsApp%20Image%202026-05-29%20at%2010.43.15%20PM.jpeg",
   },
   {
     name: "Infrastructure",
     icon: "🛣️",
     description: "Highway tolls, checkposts, and control rooms",
-    image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=80",
+    image: "/product/securetyCabin.jpeg",
   },
   {
     name: "IT & Tech",
     icon: "💻",
     description: "Quick-deploy data centers and server rooms",
-    image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=400&q=80",
+    image: "/product/WhatsApp%20Image%202026-05-29%20at%2010.49.42%20PM.jpeg",
   },
   {
     name: "Defense",
     icon: "🛡️",
     description: "Military field offices and secure facilities",
-    image: "https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?w=400&q=80",
+    image: "/product/toilet.jpeg",
   },
 ];
 
 export const galleryImages = [
   {
     id: 1,
-    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
+    src: "/product/officeCabin.jpeg",
     category: "office",
     title: "Executive Office Cabin",
     size: "large",
   },
   {
     id: 2,
-    src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80",
+    src: "/product/securetyCabin.jpeg",
     category: "security",
     title: "Security Guard Post",
     size: "small",
   },
   {
     id: 3,
-    src: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80",
+    src: "/product/farmhouse.jpeg",
     category: "housing",
     title: "Container Home",
     size: "small",
   },
   {
     id: 4,
-    src: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80",
+    src: "/product/WhatsApp%20Image%202026-05-29%20at%2010.49.42%20PM.jpeg",
     category: "office",
     title: "Modular Office Interior",
     size: "medium",
   },
   {
     id: 5,
-    src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80",
+    src: "/product/portabletoilet.jpeg",
     category: "sanitation",
     title: "Construction Site Setup",
     size: "small",
   },
   {
     id: 6,
-    src: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80",
+    src: "/product/WhatsApp%20Image%202026-05-29%20at%2010.46.05%20PM.jpeg",
     category: "housing",
     title: "Modern Container Studio",
     size: "large",
   },
   {
     id: 7,
-    src: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80",
+    src: "/product/WhatsApp%20Image%202026-05-29%20at%2010.50.03%20PM.jpeg",
     category: "storage",
     title: "Industrial Storage Unit",
     size: "medium",
   },
   {
     id: 8,
-    src: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80",
+    src: "/product/portableOffice.jpeg",
     category: "office",
     title: "Site Office Installation",
     size: "small",
   },
   {
     id: 9,
-    src: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600&q=80",
+    src: "/product/WhatsApp%20Image%202026-05-29%20at%2010.48.13%20PM.jpeg",
     category: "office",
     title: "Modern Interior Finish",
     size: "medium",
   },
   {
     id: 10,
-    src: "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&q=80",
+    src: "/product/WhatsApp%20Image%202026-05-29%20at%2010.35.48%20PM.jpeg",
     category: "housing",
     title: "Container Villa Project",
     size: "large",
   },
   {
     id: 11,
-    src: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=600&q=80",
+    src: "/product/toilet.jpeg",
     category: "storage",
     title: "Warehouse Storage Setup",
     size: "small",
   },
   {
     id: 12,
-    src: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80",
+    src: "/product/WhatsApp%20Image%202026-05-29%20at%2010.43.15%20PM.jpeg",
     category: "housing",
     title: "Container Kitchen Unit",
     size: "medium",
@@ -625,30 +623,16 @@ export const galleryImages = [
 export const teamMembers = [
   {
     id: 1,
-    name: "Vikram Mehta",
-    role: "Founder & CEO",
-    bio: "25+ years in modular construction. Pioneered the concept of high-quality portable structures in India.",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80",
+    name: "Ali Hussain",
+    role: "Partner",
+    state: "Bihar",
+    bio: "Managing and authorized partner of MA INFRA Portable Cabin.",
   },
   {
     id: 2,
-    name: "Anita Desai",
-    role: "Head of Design",
-    bio: "Award-winning architect specializing in compact and sustainable modular design systems.",
-    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=300&q=80",
-  },
-  {
-    id: 3,
-    name: "Ravi Krishnamurthy",
-    role: "Chief Engineer",
-    bio: "Structural engineer with expertise in pre-engineered steel and sandwich panel systems.",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80",
-  },
-  {
-    id: 4,
-    name: "Sneha Joshi",
-    role: "Sales Director",
-    bio: "Built our pan-India distribution network with 200+ channel partners and institutional clients.",
-    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&q=80",
+    name: "Md Mansoor Alam",
+    role: "Partner",
+    state: "Bihar",
+    bio: "Managing and authorized partner of MA INFRA Portable Cabin.",
   },
 ];

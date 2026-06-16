@@ -24,7 +24,17 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { motion } from "framer-motion";
 import { teamMembers, stats } from "@/data/products";
+import { company } from "@/data/company";
 import SectionHeader from "@/components/common/SectionHeader";
+
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
 
 const processSteps = [
   {
@@ -313,17 +323,75 @@ export default function AboutPage() {
         </Container>
       </Box>
 
+      <Box sx={{ py: { xs: 6, md: 8 }, bgcolor: "white" }}>
+        <Container maxWidth="xl">
+          <SectionHeader
+            badge="Registered Business"
+            title="Government"
+            highlight="Registration"
+            subtitle="MA INFRA is a GST-registered business under the Government of India."
+          />
+          <Paper
+            elevation={0}
+            sx={{
+              p: { xs: 2.5, md: 3.5 },
+              borderRadius: 3,
+              border: "1px solid rgba(0,0,0,0.06)",
+              maxWidth: 720,
+              mx: "auto",
+            }}
+          >
+            <Box sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}>
+              <Box
+                sx={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: 2,
+                  bgcolor: "#EFF6FF",
+                  color: "primary.main",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <VerifiedIcon />
+              </Box>
+              <Box>
+                <Typography variant="caption" sx={{ color: "text.secondary", display: "block", mb: 0.5 }}>
+                  {company.gst.form}
+                </Typography>
+                <Typography sx={{ fontWeight: 700, mb: 1.5 }}>{company.gst.certificate}</Typography>
+                <Typography variant="body2" sx={{ color: "text.secondary", mb: 1 }}>
+                  Registration Number
+                </Typography>
+                <Chip
+                  label={company.gst.registrationNumber}
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "0.95rem",
+                    letterSpacing: "0.04em",
+                    bgcolor: "#EFF6FF",
+                    color: "primary.main",
+                  }}
+                />
+              </Box>
+            </Box>
+          </Paper>
+        </Container>
+      </Box>
+
       <Box sx={{ py: { xs: 6, md: 8 }, bgcolor: "#F8FAFC" }}>
         <Container maxWidth="xl">
           <SectionHeader
             badge="Meet the Team"
-            title="The People Behind"
-            highlight="MA INFRA"
-            subtitle="Experienced engineers, designers, and delivery experts."
+            title="Managing & Authorized"
+            highlight="Partners"
+            subtitle="The partners leading MA INFRA Portable Cabin."
           />
           <Grid container spacing={3} sx={{ justifyContent: "center" }}>
             {teamMembers.map((member) => (
-              <Grid key={member.id} size={{ xs: 12, sm: 6, md: 3 }}>
+              <Grid key={member.id} size={{ xs: 12, sm: 6, md: 4 }}>
                 <Paper
                   elevation={0}
                   sx={{
@@ -332,6 +400,7 @@ export default function AboutPage() {
                     border: "1px solid rgba(0,0,0,0.06)",
                     borderRadius: 3,
                     transition: "all 0.25s ease",
+                    height: "100%",
                     "&:hover": {
                       boxShadow: "0 10px 28px rgba(0,0,0,0.08)",
                       transform: "translateY(-3px)",
@@ -339,13 +408,25 @@ export default function AboutPage() {
                   }}
                 >
                   <Avatar
-                    src={member.avatar}
                     alt={member.name}
-                    sx={{ width: 78, height: 78, mx: "auto", mb: 1.5 }}
-                  />
+                    sx={{
+                      width: 78,
+                      height: 78,
+                      mx: "auto",
+                      mb: 1.5,
+                      bgcolor: "primary.main",
+                      fontWeight: 700,
+                      fontSize: "1.25rem",
+                    }}
+                  >
+                    {getInitials(member.name)}
+                  </Avatar>
                   <Typography sx={{ fontWeight: 700, mb: 0.25 }}>{member.name}</Typography>
-                  <Typography variant="caption" sx={{ color: "primary.main", fontWeight: 600, display: "block", mb: 1 }}>
+                  <Typography variant="caption" sx={{ color: "primary.main", fontWeight: 600, display: "block", mb: 0.5 }}>
                     {member.role}
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: "text.secondary", display: "block", mb: 1 }}>
+                    Resident of {member.state}
                   </Typography>
                   <Typography variant="body2" sx={{ color: "text.secondary", lineHeight: 1.6 }}>
                     {member.bio}

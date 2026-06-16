@@ -296,7 +296,7 @@ export default function Footer() {
                     gap: 1,
                   }}
                 >
-                  {["ISO 9001:2015", "CE Certified", "MSME Registered"].map((label) => (
+                  {company.certifications.map((label) => (
                     <Chip
                       key={label}
                       label={label}
@@ -309,6 +309,18 @@ export default function Footer() {
                       }}
                     />
                   ))}
+                  <Chip
+                    label={`GSTIN: ${company.gst.registrationNumber}`}
+                    size="small"
+                    sx={{
+                      bgcolor: "#1E293B",
+                      color: "#94A3B8",
+                      fontSize: "0.7rem",
+                      height: 26,
+                      fontFamily: "monospace",
+                      letterSpacing: "0.03em",
+                    }}
+                  />
                 </Box>
               </Grid>
             </Grid>
@@ -332,7 +344,7 @@ export default function Footer() {
             © {new Date().getFullYear()} MA INFRA Portable Cabin. All rights reserved.
           </Typography>
           <Typography variant="caption" sx={{ color: "#475569", lineHeight: 1.5 }}>
-            Made with ♥ in India · GST: 09ABCDE1234F1Z5
+            Made with ♥ in India · GST: {company.gst.registrationNumber}
           </Typography>
         </Box>
       </Container>
