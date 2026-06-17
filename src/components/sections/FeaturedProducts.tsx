@@ -10,10 +10,10 @@ import SectionHeader from "@/components/common/SectionHeader";
 
 const tabs = [
   "All",
-  "Portable Office",
+  "Portable Office Cabin",
   "Security Cabin",
-  "Container House",
-  "Modular Office",
+  "Portable Toilet",
+  "Farm House",
 ];
 
 export default function FeaturedProducts() {

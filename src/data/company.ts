@@ -4,6 +4,16 @@
 export const company = {
   name: "MA INFRA Portable Cabin",
   shortName: "MA INFRA",
+  brandSlug: "mainfrapc",
+  siteUrl: "https://mainfrapc.com",
+  domain: "mainfrapc.com",
+  alternateNames: [
+    "mainfrapc",
+    "mainfrapc.com",
+    "MA INFRA",
+    "MA INFRA Portable Cabin",
+    "Mainfra PC",
+  ] as const,
   tagline: "Strong Structures, Reliable Solutions",
   salesManager: "Alam",
   salesManagerTitle: "Sales Manager",
@@ -12,7 +22,7 @@ export const company = {
   phoneTel: "+917461975741",
   whatsapp: "917461975741",
 
-  email: "business@mainfrapc.com",
+  email: "info@mainfrapc.com",
 
   address: {
     line1: "At-Khata No-14, Plot No-347",

@@ -27,7 +27,7 @@ const slides = [
     titleHighlight: "Cabins",
     subtitle: "Built for Every Site",
     description:
-      "Premium pre-engineered portable cabins for construction sites, corporate campuses, and industrial facilities. Delivered pan-India within days.",
+      "MA INFRA (mainfrapc.com) — premium pre-engineered portable cabins for construction sites, corporate campuses, and industrial facilities. Delivered pan-India within days.",
     image: "/hero/hero1.jpeg",
     cta: "Explore Cabins",
     ctaHref: "/products?category=portable-office-cabin",
@@ -41,8 +41,8 @@ const slides = [
     description:
       "Earthquake-resistant, energy-efficient container homes with premium interiors. From compact studios to full 3BHK configurations.",
     image: "/hero/hero2.jpeg",
-    cta: "View Container Houses",
-    ctaHref: "/products?category=container-house",
+    cta: "View Home Cabins",
+    ctaHref: "/products?category=farm-house",
   },
   {
     id: 3,

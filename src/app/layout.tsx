@@ -4,34 +4,10 @@ import ThemeRegistry from "@/components/common/ThemeRegistry";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/common/WhatsAppButton";
+import JsonLd from "@/components/seo/JsonLd";
+import { rootMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: {
-    default: "MA INFRA Portable Cabin - Premium Portable Cabins & Modular Solutions",
-    template: "%s | MA INFRA Portable Cabin",
-  },
-  description:
-    "India's leading manufacturer of portable office cabins, security cabins, container houses, and modular infrastructure solutions. Quality, durability, and fast delivery.",
-  keywords: [
-    "portable cabin",
-    "modular office",
-    "security cabin",
-    "container house",
-    "portable toilet",
-    "modular infrastructure",
-    "MA INFRA",
-  ],
-  openGraph: {
-    type: "website",
-    locale: "en_IN",
-    url: "https://mainfraportablecabin.com",
-    siteName: "MA INFRA Portable Cabin",
-  },
-  icons: {
-    icon: "/logo/ma-logo.png",
-    apple: "/logo/ma-logo.png",
-  },
-};
+export const metadata: Metadata = rootMetadata;
 
 export default function RootLayout({
   children,
@@ -39,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en-IN">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -53,6 +29,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <JsonLd />
         <ThemeRegistry>
           <Navbar />
           <main>{children}</main>

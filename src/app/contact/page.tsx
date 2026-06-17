@@ -32,9 +32,8 @@ const productCategories = [
   "Portable Office Cabin",
   "Security Cabin",
   "Portable Toilet",
-  "Container House",
-  "Modular Office",
-  "Portable Storage Cabin",
+  "Farm House / Bunk House",
+  "Labour Cabin",
   "Custom/Other",
 ];
 

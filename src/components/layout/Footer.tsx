@@ -31,9 +31,7 @@ const footerLinks = {
     { label: "Portable Office Cabin", href: "/products?category=portable-office-cabin" },
     { label: "Security Cabin", href: "/products?category=security-cabin" },
     { label: "Portable Toilet", href: "/products?category=portable-toilet" },
-    { label: "Container House", href: "/products?category=container-house" },
-    { label: "Modular Office", href: "/products?category=modular-office" },
-    { label: "Storage Cabin", href: "/products?category=portable-storage-cabin" },
+    { label: "Farm House & Bunk House", href: "/products?category=farm-house" },
   ],
   Company: [
     { label: "About Us", href: "/about" },
@@ -126,7 +124,11 @@ export default function Footer() {
               sx={{ color: "#94A3B8", mb: 2.5, lineHeight: 1.7, maxWidth: 320 }}
             >
               India&apos;s leading manufacturer of portable cabins, modular offices,
-              and container-based infrastructure. {company.tagline}
+              and container-based infrastructure. Official website:{" "}
+              <Box component="span" sx={{ color: "#CBD5E1", fontWeight: 600 }}>
+                {company.domain}
+              </Box>
+              . {company.tagline}
             </Typography>
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1.25, mb: 2.5 }}>
