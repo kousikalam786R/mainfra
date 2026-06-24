@@ -14,7 +14,15 @@ export default function JsonLd() {
     image: absoluteUrl("/hero/hero1.jpeg"),
     description:
       "mainfrapc — MA INFRA Portable Cabin manufactures MS portable office cabins, security cabins, portable toilets, bunk houses, and modular site infrastructure in India.",
-    email: company.email,
+    email: company.emails.map((item) => item.address),
+    contactPoint: company.emails.map((item) => ({
+      "@type": "ContactPoint",
+      contactType: item.label,
+      email: item.address,
+      telephone: company.phoneTel,
+      areaServed: "IN",
+      availableLanguage: ["English", "Hindi"],
+    })),
     telephone: company.phoneTel,
     taxID: company.gst.registrationNumber,
     address: {

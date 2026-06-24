@@ -42,7 +42,7 @@ const offices = [
     city: `${company.address.city} — Head Office & Factory`,
     address: company.addressFull,
     phone: company.phone,
-    email: company.email,
+    email: company.salesEmail,
     contactPerson: `${company.salesManager} · ${company.salesManagerTitle}`,
     hours: company.hours,
     isPrimary: true,
@@ -354,21 +354,23 @@ export default function ContactPage() {
                         hoverBg: "rgba(37,211,102,0.28)",
                         external: true,
                       },
-                      {
-                        href: `mailto:${company.email}`,
+                      ...company.emails.map((item) => ({
+                        href: `mailto:${item.address}`,
                         icon: <EmailIcon sx={{ color: "#FF9800", fontSize: 26 }} />,
-                        label: "Email",
-                        value: company.email,
+                        label: item.label,
+                        value: item.address,
                         bg: "rgba(255,255,255,0.1)",
                         border: "rgba(255,255,255,0.15)",
                         hoverBg: "rgba(255,255,255,0.16)",
-                      },
+                      })),
                     ].map((item) => (
                       <Box
                         key={item.label}
                         component="a"
                         href={item.href}
-                        {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                        {...("external" in item && item.external
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
                         sx={{
                           display: "flex",
                           alignItems: "center",
@@ -502,6 +504,19 @@ export default function ContactPage() {
                           {office.hours}
                         </Typography>
                       </Box>
+                      {company.emails.map((item) => (
+                        <Box key={item.address} sx={{ display: "flex", gap: 1.25, alignItems: "center" }}>
+                          <EmailIcon sx={{ fontSize: 18, color: "primary.main", flexShrink: 0 }} />
+                          <Typography
+                            variant="body2"
+                            component="a"
+                            href={`mailto:${item.address}`}
+                            sx={{ color: "text.secondary", textDecoration: "none", "&:hover": { color: "primary.main" } }}
+                          >
+                            {item.address}
+                          </Typography>
+                        </Box>
+                      ))}
                     </Box>
                   </Paper>
                 </motion.div>

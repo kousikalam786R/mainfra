@@ -43,11 +43,10 @@ const footerLinks = {
   ],
   Support: [
     { label: "FAQ", href: "/contact" },
-    { label: "Installation Guide", href: "/contact" },
-    { label: "Warranty Policy", href: "/contact" },
-    { label: "Return Policy", href: "/contact" },
-    { label: "Terms of Service", href: "/contact" },
-    { label: "Privacy Policy", href: "/contact" },
+    { label: "Warranty Policy", href: "/warranty-policy" },
+    { label: "Return Policy", href: "/return-policy" },
+    { label: "Terms of Service", href: "/terms-of-service" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
   ],
 };
 
@@ -156,16 +155,29 @@ export default function Footer() {
                 </Typography>
               </ContactRow>
               <ContactRow icon={<EmailIcon sx={{ fontSize: 18 }} />}>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: "#94A3B8",
-                    lineHeight: 1.5,
-                    wordBreak: "break-word",
-                  }}
-                >
-                  {company.email}
-                </Typography>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+                  {company.emails.map((item) => (
+                    <Typography
+                      key={item.address}
+                      variant="body2"
+                      component="a"
+                      href={`mailto:${item.address}`}
+                      sx={{
+                        color: "#94A3B8",
+                        lineHeight: 1.5,
+                        wordBreak: "break-word",
+                        textDecoration: "none",
+                        "&:hover": { color: "#CBD5E1" },
+                      }}
+                    >
+                      {item.address}
+                      <Box component="span" sx={{ color: "#64748B" }}>
+                        {" "}
+                        · {item.label}
+                      </Box>
+                    </Typography>
+                  ))}
+                </Box>
               </ContactRow>
             </Box>
 

@@ -175,14 +175,24 @@ export default function CTASection() {
                       {company.phone}
                     </Typography>
                   </Box>
-                  <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-                    <EmailIcon sx={{ color: "#FF9800", fontSize: 18 }} />
-                    <Typography
-                      variant="body2"
-                      sx={{ color: "rgba(255,255,255,0.8)" }}
-                    >
-                      {company.email}
-                    </Typography>
+                  <Box sx={{ display: "flex", flexDirection: "column", gap: 0.75 }}>
+                    {company.emails.map((item) => (
+                      <Box key={item.address} sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                        <EmailIcon sx={{ color: "#FF9800", fontSize: 18 }} />
+                        <Typography
+                          variant="body2"
+                          component="a"
+                          href={`mailto:${item.address}`}
+                          sx={{
+                            color: "rgba(255,255,255,0.8)",
+                            textDecoration: "none",
+                            "&:hover": { color: "#FFFFFF" },
+                          }}
+                        >
+                          {item.address}
+                        </Typography>
+                      </Box>
+                    ))}
                   </Box>
                 </Box>
               </Grid>

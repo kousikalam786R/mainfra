@@ -22,7 +22,12 @@ export const company = {
   phoneTel: "+917461975741",
   whatsapp: "917461975741",
 
-  email: "info@mainfrapc.com",
+  salesEmail: "sales@mainfrapc.com",
+  email: "inframapc@gmail.com",
+  emails: [
+    { address: "sales@mainfrapc.com", label: "Sales" },
+    { address: "inframapc@gmail.com", label: "General Inquiries" },
+  ] as const,
 
   address: {
     line1: "At-Khata No-14, Plot No-347",

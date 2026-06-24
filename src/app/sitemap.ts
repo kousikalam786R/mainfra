@@ -11,6 +11,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/about", priority: 0.8, changeFrequency: "monthly" as const },
     { path: "/contact", priority: 0.8, changeFrequency: "monthly" as const },
     { path: "/gallery", priority: 0.7, changeFrequency: "monthly" as const },
+    { path: "/warranty-policy", priority: 0.5, changeFrequency: "yearly" as const },
+    { path: "/return-policy", priority: 0.5, changeFrequency: "yearly" as const },
+    { path: "/terms-of-service", priority: 0.5, changeFrequency: "yearly" as const },
+    { path: "/privacy-policy", priority: 0.5, changeFrequency: "yearly" as const },
   ];
 
   const productRoutes = products.map((product) => ({

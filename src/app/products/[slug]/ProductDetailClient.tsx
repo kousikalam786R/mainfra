@@ -712,7 +712,7 @@ export default function ProductDetailClient() {
                         },
                         {
                           label: "Email address",
-                          placeholder: company.email,
+                          placeholder: company.salesEmail,
                         },
                         { label: "City / location *", placeholder: "Ranchi, Jharkhand" },
                         {
